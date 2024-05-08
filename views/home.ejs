@@ -1,13 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/main.css" />
-    <title>Document</title>
-  </head>
+  <%- include('components/head') %>
   <body>
-    <%- include('components/header') %>
-    <h1>home</h1>
+    <%- include('components/header') %>  
+    
+    <div class="home">
+      <h1 class="home__firstlook">
+        Добро пожаловать в Rarhica! Мир вкуса и кулинарных открытий!
+      </h1>
+  
+      <h2 class="home__aboutreview">
+        Приготовьтесь к кулинарному путешествию!
+      </h2>
+  
+      <div class="home__review">
+        <% text = "Откройте для себя вдохновляющие рецепты: От классических блюд до экспериментальных новинок – наши рецепты пробуждают аппетит и вдохновляют на кулинарные подвиги." %>
+        <% url = "https://www.povarenok.ru/data/cache/2016sep/16/12/1709205_60985-710x550x.jpg" %>
+        <%- include('components/home/review__item-right', {text, url}) %>
+
+        <% text = "Погрузитесь в кулинарные миры мира: Изучайте ароматы и вкусы разных стран, путешествуя с нами по их кухням и традициям." %>
+        <% url = "https://static.tildacdn.com/tild3235-3830-4835-b632-343866653561/rice-noodles-in-a-bo.jpg" %>
+        <%- include('components/home/review__item-left', {text, url}) %>
+        
+        <% text = "Научитесь кулинарным хитростям: От искусства нарезки до секретов идеального приготовления – узнайте техники, которые превратят ваши блюда в произведения искусства." %>
+        <% url ="https://grandkulinar.ru/uploads/posts/2014-03/1395058298_iskusstvo-narezki-fruktov.jpg" %>
+        <%- include('components/home/review__item-right', {text, url}) %>
+
+        <% text = "Общение и вдохновение: Обменивайтесь своими идеями, рассказывайте о своих кулинарных успехах и участвуйте в живых дискуссиях с единомышленниками." %>
+        <% url = "https://elle.ua/imgold/690x459_0xd42ee42d_2169421211447697866.jpeg" %>
+        <%- include('components/home/review__item-left', {text, url}) %>
+
+        <% text = 'Присоединяйтесь к "Кулинарным приключениям" и окунитесь в мир вкуса, творчества и вдохновения!' %>
+        <% url = "https://elle.ua/imgold/690x459_0xd42ee42d_2169421211447697866.jpeg" %>
+        <%- include('components/home/review__item-right', {text, url}) %>
+
+      </div>
+
+      <%- include('components/topRecipes') %>
+    </div>
+    
+    <%- include('components/footer') %>
   </body>
 </html>

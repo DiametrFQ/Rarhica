@@ -1,0 +1,25 @@
+.topRecipes {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 0;
+
+  & > .topRecipes__title{
+    text-align: center;
+  }
+
+  & > .topRecipes__items{
+    display: flex;
+    justify-content: space-between;
+
+    & > .topRecipes__items__item{
+        & > div{
+          text-align: center;
+          margin: 10px 0;
+        }
+
+        & > img{
+          width: 200px;
+        }
+    }
+  }
+}

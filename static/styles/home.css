@@ -1,0 +1,49 @@
+.home{
+    & > .home__firstlook{
+        margin: 40px 0;
+    }
+
+    & > .home__aboutreview{
+        margin: 30px 0;
+    }
+}
+
+.review__item-right{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > *{
+        margin: 20px 0;
+    }
+
+    & > div{
+        width: 60%;
+        font-size: large;
+    }
+
+    & > img{
+        margin-left: 50px;
+        height: 250px;
+    }
+}
+
+.review__item-left{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > *{
+        margin: 20px 0;
+    }
+
+    & > div{
+        width: 60%;
+        font-size: large;
+    }
+
+    & > img{
+        margin-right: 50px;
+        height: 250px;
+    }
+}

@@ -1,0 +1,41 @@
+@import url(./administration.css);
+@import url(./error.css);
+@import url(./feedback.css);
+@import url(./home.css);
+@import url(./registration.css);
+@import url(./login.css);
+
+@import url(./components/components.css);
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --global-margin: 0 13%;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    /* & > *{
+        align-self: center;
+        margin: var(--global-margin);
+    }
+    & > .header, .footer{
+        margin: 0;
+        padding: var(--global-margin);
+    } */
+
+    & > *:not(.header):not(.footer){
+        align-self: center;
+        margin: var(--global-margin);
+    }
+    & > .header, .footer{
+        padding: var(--global-margin);
+    }
+}
