@@ -3,21 +3,77 @@
   <%- include('components/head') %>
   <body>
     <%- include('components/header') %>
-
+    <div class="loginError">Не правильно введен логин или пароль</div>
     <div class="login">
       <h1>Login</h1>
 
-      <form>
-        <input type="email" placeholder="Email">
-        <input type="password" placeholder="Password">
+      <form class="loginForm">
+        <input type="login" name="login" placeholder="Login" />
+        <input type="password" name="password" placeholder="Password" />
       </form>
 
-      <input type="button" value="Войти">
+      <input class="loginButton" type="button" value="Войти" />
       <div>
-        Вы здесь в первый раз? <a href="registration">Зарегистрироваться</a>
+        Вы здесь в первый раз? <a class="toRegistration">Зарегистрироваться</a>
       </div>
     </div>
 
+    <div class="registration">
+      <h1>Registration</h1>
+
+      <form class="regForm">
+        <input type="text" name="login" placeholder="Login" />
+        <input type="email" name="email" placeholder="Email" />
+        <input type="password" name="password" placeholder="Password" />
+        <input
+          type="password"
+          name="repeatPassword"
+          placeholder="Repeat password" />
+      </form>
+
+      <input class="regButton" type="button" value="Отправить" />
+
+      <div>У вас уже есть аккаунт? <a class="toLogin">Добро пожаловать</a></div>
+    </div>
+
     <%- include('components/footer') %>
+
+    <script>
+      $("input.loginButton").on("click", () => {
+        const id = $.ajax({
+          url: "/login",
+          type: "POST",
+          data: $("form.loginForm").serialize(),
+          success: (id) => {
+            if (id?.id) window.location.href = "/profile/" + id.id;
+            else $(".loginError").show();
+          },
+        });
+      });
+      $("input.regButton").on("click", () => {
+        $.ajax({
+          url: "/registration",
+          type: "POST",
+          data: $("form.regForm").serialize(),
+          success: () => {
+            $(".login").show();
+            $(".registration").hide();
+          },
+          // error: (err) => {
+          //   console.log(err);
+          // },
+        });
+      });
+
+      $(".toRegistration").on("click", () => {
+        $(".login").hide();
+        $(".registration").show();
+      });
+
+      $(".toLogin").on("click", () => {
+        $(".login").show();
+        $(".registration").hide();
+      });
+    </script>
   </body>
 </html>

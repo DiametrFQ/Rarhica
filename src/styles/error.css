@@ -1,0 +1,14 @@
+.error{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px);
+    font-size: 36px;
+    font-weight: 900;
+    justify-content: space-evenly;
+}
+.error__image{
+    --side: 800px;
+    width: var(--side);
+    height: calc(var(--side) * 0.6);
+}

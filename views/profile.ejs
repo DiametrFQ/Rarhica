@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('components/head') %>
+  <body>
+    <%- include('components/header') %>
+    <!-- <div class="profile">
+
+      <button>+</button>
+    </div> -->
+
+    <button>Create recipe</button>
+
+    <%- include('components/footer') %>
+
+    <!-- <script>
+      //динмическое добавление элементов
+
+      $("button").on("click", () => {
+        console.log("click");
+        $("button").before("<div>new</div>");
+      });
+    </script> -->
+
+    <script>
+      $("button").on("click", () => {
+        const id = <%= id_user %>;
+        window.location.href = `${id}/createRecipe`;
+      });
+    </script>
+  </body>
+</html>
