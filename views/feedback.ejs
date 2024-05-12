@@ -2,30 +2,25 @@
 <html lang="en">
   <%- include('components/head') %>
   <body>
-    <%- include('components/header') %>
+    <%- include('components/header', { login }) %>
 
     <div class="feedback">
       <h1>Feedback</h1>
 
       <form>
-        <input type="text" placeholder="Имя">
-        <input type="text" placeholder="Фамилия">
-  
-        <input type="text" placeholder="Номер телефона">
-  
+        <input type="text" placeholder="Имя" />
+        <input type="text" placeholder="Фамилия" />
+
+        <input type="text" placeholder="Номер телефона" />
+
         <textarea placeholder="Раскажите о чем вы думаете"></textarea>
-  
       </form>
 
-      <input type="button" value="Отправить">
+      <input type="button" value="Отправить" />
     </div>
-
-
 
     <%- include('components/footer') %>
   </body>
 
-  <script>
-
-  </script>
+  <script></script>
 </html>

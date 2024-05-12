@@ -2,38 +2,34 @@
 <html lang="en">
   <%- include('components/head') %>
   <body>
-    <%- include('components/header') %>
+    <%- include('components/header', { login: login }) %>
 
     <div class="recipe">
+      <div class="recipe__head">
+        <div>Вишневый пирог</div>
+        <img
+          src="https://www.povarenok.ru/data/cache/2016sep/16/12/1709205_60985-710x550x.jpg"
+          alt="" />
+      </div>
 
-        <div class="recipe__head">
-            <div>Вишневый пирог</div>
-            <img src="https://www.povarenok.ru/data/cache/2016sep/16/12/1709205_60985-710x550x.jpg" alt="">
-        </div>
+      <div class="recipe-about">Этот пирог очень вкусный!</div>
 
-        <div class="recipe-about">
-            Этот пирог очень вкусный! 
-        </div>
+      <div class="recipe-infoheader">Рецепт:</div>
 
-        <div class="recipe-infoheader">
-            Рецепт:
-        </div>
+      <div class="recipe-info">
+        <%- include('components/recipe/ingredient') %> <%-
+        include('components/recipe/ingredient') %> <%-
+        include('components/recipe/ingredient') %> <%-
+        include('components/recipe/ingredient') %> <%-
+        include('components/recipe/ingredient') %>
+      </div>
 
-        <div class="recipe-info">
-            <%- include('components/recipe/ingredient') %>
-            <%- include('components/recipe/ingredient') %>
-            <%- include('components/recipe/ingredient') %>
-            <%- include('components/recipe/ingredient') %>
-            <%- include('components/recipe/ingredient') %>
-        </div>
-
-        <div class="comments">
-            <%- include('components/recipe/comment') %>
-            <%- include('components/recipe/comment') %>
-            <%- include('components/recipe/comment') %>
-            <%- include('components/recipe/comment') %>
-        </div>
-    
+      <div class="comments">
+        <%- include('components/recipe/comment') %> <%-
+        include('components/recipe/comment') %> <%-
+        include('components/recipe/comment') %> <%-
+        include('components/recipe/comment') %>
+      </div>
     </div>
 
     <%- include('components/footer') %>

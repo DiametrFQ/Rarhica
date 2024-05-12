@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
   console.log(login, email, password);
 
   query(
-    "INSERT INTO `user` (`id`, `login`, `email`, `password`) VALUES (NULL, ?, ?, ?)",
+    "INSERT INTO `user` (`id`, `login`, `email`, `password`, `role`) VALUES (NULL, ?, ?, ?, 'user')",
     [login, email, password]
   );
 

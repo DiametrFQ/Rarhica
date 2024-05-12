@@ -1,18 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include('components/head') %>
+
+  <style>
+    input[name="id"] {
+      visibility: hidden;
+      height: 0;
+      width: 0;
+    }
+  </style>
   <body>
-    <%- include('components/header') %> <%= user_id %>
+    <%- include('components/header', { login }) %> <%= user_id %>
     <div>
-      <form>
-        <input type="text" name="title" placeholder="Title" />
-        <input type="text" name="description" placeholder="Description" />
-        <input type="text" name="ingredients" placeholder="Ingredients" />
-        <input type="text" name="instructions" placeholder="Instructions" />
-        <button>Create</button>
+      <form class="recipe">
+        <input
+          type="text"
+          name="name"
+          placeholder="Title"
+          value="<%= recipe?.name || '' %>" />
+        <input
+          type="text"
+          name="img"
+          placeholder="URL Image"
+          value="<%= recipe?.img || '' %>" />
+        <input
+          type="text"
+          name="about"
+          placeholder="about"
+          value="<%= recipe?.about || '' %>" />
       </form>
+
+      <form class="ingredients">
+        <% ingredients.forEach((ingredient) => { %>
+        <div>
+          <input
+            type="text"
+            name="ingredient"
+            placeholder="Ingredient"
+            value="<%= ingredient.name || '' %>" />
+          <input
+            type="text"
+            name="quantity"
+            placeholder="Quantity"
+            value="<%= ingredient.quantity || '' %>" />
+          <input
+            visibility="hidden"
+            name="id"
+            placeholder="id"
+            value="<%= ingredient.id || '' %>" />
+        </div>
+        <% }) %>
+      </form>
+      <button class="addIngredient">Добавить ингредиент</button>
+      <button class="removeIngredient">Удалить ингредиент</button>
+
+      <button class="requestButton">
+        <% if(method === "PUT"){ %> Изменить <% } else if(method ===
+        "DELETE"){%> Удалить <% }else{ %> Добавить <% }%>
+      </button>
     </div>
     <%- include('components/footer') %>
-    <script></script>
+    <script>
+      $(".addIngredient").on("click", () => {
+        $("form.ingredients").append(
+          `
+            <div>
+                <input type="text" name="ingredient" placeholder="Ingredient" />
+                <input type="text" name="quantity" placeholder="Quantity" />
+            </div>
+        `
+        );
+      });
+
+      $(".removeIngredient").on("click", () => {
+        $("form.ingredients").children().last().remove();
+      });
+
+      console.log($("form.recipe"));
+      $(".requestButton").on("click", () => {
+        console.log($("form.recipe").serialize());
+
+        console.log($("form.ingredients").serialize());
+        $.ajax({
+          url: "/profile/<%= user_id %>/createRecipe/<%= recipe?.id || '' %>",
+          type: "<%= method %>",
+          data:
+            $("form.recipe").serialize() +
+            "&" +
+            $("form.ingredients").serialize() +
+            "&user_id=<%= user_id %>",
+
+          success: () => {
+            console.log("success");
+            window.location.href = "/profile/<%= user_id %>";
+          },
+          error: (err) => {
+            console.log("err", err);
+          },
+        });
+      });
+    </script>
   </body>
 </html>

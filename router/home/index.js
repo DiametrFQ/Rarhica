@@ -2,7 +2,8 @@ import { Router } from "express";
 const router = new Router();
 
 router.get("/", (_, res) => {
-  res.render("home");
+  const { login } = req.session.user;
+  res.render("home", { login: login || "Login" });
 });
 
 // router.post("/", (_, res) => {

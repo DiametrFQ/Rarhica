@@ -7,10 +7,12 @@
   },
   "dependencies": {
     "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.9",
     "ets": "^1.0.3",
     "express": "^4.19.1",
+    "express-session": "^1.18.0",
     "mongodb": "^6.5.0",
     "mysql2": "^3.9.7",
     "uuid": "^9.0.1"

@@ -3,9 +3,20 @@ import query from "../../DB.js";
 import createResipes from "./CreateResipes/index.js";
 const router = new Router();
 
-router.get("/:id_user", (req, res) => {
-  const id_user = req.params.id_user;
-  res.render("profile", { id_user });
+router.get("/:id_user", async (req, res) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  const { id: id_user, login } = req.session.user;
+  console.log("session", req.session.user);
+
+  console.log("id_user", id_user);
+  const recipes = await query("SELECT * FROM `recipe` WHERE user_id = ?", [
+    id_user,
+  ]);
+
+  console.log("login", login);
+  res.render("profile", { id_user, recipes, login });
 });
 
 router.use("/:id_user/createRecipe", createResipes);

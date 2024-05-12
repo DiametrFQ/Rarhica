@@ -2,20 +2,29 @@ import { Router } from "express";
 import query from "../../DB.js";
 const router = new Router();
 
-router.get("/", async (_, res) => {
-  res.render("login", { error: " " });
+router.get("/", async (req, res) => {
+  if (!req.session.user) {
+    return res.render("login", { error: " ", login: "Login" });
+  }
+
+  const { id, login } = req.session.user;
+
+  if (id) return res.redirect(`/profile/${id}`);
+  else return res.render("login", { error: " ", login: login || "Login" });
 });
 
 router.post("/", async (req, res) => {
   const { login, password } = req.body;
   console.log(login, password);
 
-  const id = await query(
-    "SELECT id FROM `user` WHERE login = ? AND password = ?",
+  const rez = await query(
+    "SELECT * FROM `user` WHERE login = ? AND password = ?",
     [login, password]
-  ).then((id) => id[0]?.id);
+  ).then((rez) => rez[0]);
 
-  res.json({ id });
+  req.session.user = { id: rez.id, role: rez.role, login: rez.login };
+
+  res.json({ id: rez.id, role: rez.role, login: rez.login });
 });
 
 // router.put("/", (_, res) => {

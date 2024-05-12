@@ -2,29 +2,42 @@
 <html lang="en">
   <%- include('components/head') %>
   <body>
-    <%- include('components/header') %>
+    <%- include('components/header', { login }) %>
+
+    <button class="createRecipe">Create recipe</button>
+
+    <div>
+      <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
+      <div>
+        <div><%=recipe.id%></div>
+        <div><%=recipe.name%></div>
+        <div><%=recipe.img%></div>
+        <button data-method="PUT" data-id="<%=recipe.id%>">update</button>
+        <button data-method="DELETE" data-id="<%=recipe.id%>">delete</button>
+      </div>
+      <%})}else {%>
+      <div>Похоже у вас нет еще рецептов... Cамое время поделиться!!</div>
+      <%}%>
+    </div>
     <!-- <div class="profile">
 
       <button>+</button>
     </div> -->
 
-    <button>Create recipe</button>
-
     <%- include('components/footer') %>
 
-    <!-- <script>
-      //динмическое добавление элементов
-
-      $("button").on("click", () => {
-        console.log("click");
-        $("button").before("<div>new</div>");
-      });
-    </script> -->
-
     <script>
-      $("button").on("click", () => {
-        const id = <%= id_user %>;
-        window.location.href = `${id}/createRecipe`;
+      const id = "<%= id_user %>";
+      console.log(`${id}/createRecipe?method=POST`);
+      $("button.createRecipe").on("click", () => {
+        window.location.href = `${id}/createRecipe?method=POST`;
+      });
+
+      $("button[data-method]").on("click", (e) => {
+        const recipe_id = $(e.currentTarget).data("id");
+        const method = $(e.currentTarget).data("method");
+        window.location.href =
+          `${id}/createRecipe` + `?method=${method}` + `&id=${recipe_id}`;
       });
     </script>
   </body>
