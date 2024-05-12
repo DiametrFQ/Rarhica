@@ -1,8 +1,17 @@
 import { Router } from "express";
+import query from "../../DB.js";
+
 const router = new Router();
 
-router.get("/", (_, res) => {
-  res.render("administration");
+router.get("/", async (req, res) => {
+  if (!req.session.user) return res.redirect("/login");
+
+  const { login, role, id } = req.session.user;
+
+  if (role !== "admin") res.status(403).redirect("/profile/" + id);
+
+  const allUsers = await query("SELECT * FROM `user`");
+  res.render("administration", { login, allUsers });
 });
 
 router.post("/", (_, res) => {

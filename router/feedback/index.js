@@ -1,8 +1,12 @@
 import { Router } from "express";
 const router = new Router();
 
-router.get("/", (_, res) => {
-  res.render("feedback");
+router.get("/", (req, res) => {
+  if (!req.session.user) return res.redirect("/login");
+
+  const { login } = req.session.user;
+
+  res.render("feedback", { login });
 });
 
 router.post("/", (_, res) => {

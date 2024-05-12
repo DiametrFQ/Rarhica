@@ -25,13 +25,13 @@ app.use(express.static(join(DN, "static")));
 app.use(sessionMiddleware);
 app.use(router);
 
-app.get("/", (req, res) => {
-  let login = "Login";
-  if (req.session.user) {
-    login = req.session.user.login;
-  }
+app.get("/", (_, res) => {
+  // let login = "Login";
+  // if (req.session.user) {
+  //   login = req.session.user.login;
+  // }
 
-  res.render("home", { login: login || "Login" });
+  return res.status(301).redirect("/home");
 });
 
 app.use((req, res) => {

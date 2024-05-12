@@ -1,21 +1,14 @@
 import { Router } from "express";
 const router = new Router();
 
-router.get("/", (_, res) => {
-  const { login } = req.session.user;
-  res.render("home", { login: login || "Login" });
+router.get("/", (req, res) => {
+  let login = "Login";
+  console.log(req.session);
+  if (req.session.user) {
+    login = req.session.user.login;
+  }
+
+  res.render("home", { login });
 });
-
-// router.post("/", (_, res) => {
-//   res("tech cookies");
-// });
-
-// router.put("/", (_, res) => {
-//   res("tech cookies");
-// });
-
-// router.delete("/", (_, res) => {
-//   res("tech cookies");
-// });
 
 export default router;

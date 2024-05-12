@@ -7,7 +7,7 @@ router.get("/:id_user", async (req, res) => {
   if (!req.session.user) {
     return res.redirect("/login");
   }
-  const { id: id_user, login } = req.session.user;
+  const { id: id_user } = req.session.user;
   console.log("session", req.session.user);
 
   console.log("id_user", id_user);
@@ -15,8 +15,7 @@ router.get("/:id_user", async (req, res) => {
     id_user,
   ]);
 
-  console.log("login", login);
-  res.render("profile", { id_user, recipes, login });
+  res.render("profile", { id_user, recipes, login: "Logout" });
 });
 
 router.use("/:id_user/createRecipe", createResipes);

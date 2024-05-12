@@ -2,7 +2,7 @@ import { Router } from "express";
 import query from "../../DB.js";
 const router = new Router();
 
-router.get("/", async (req, res) => {
+router.get("/login", async (req, res) => {
   if (!req.session.user) {
     return res.render("login", { error: " ", login: "Login" });
   }
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
   else return res.render("login", { error: " ", login: login || "Login" });
 });
 
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
   const { login, password } = req.body;
   console.log(login, password);
 
@@ -27,12 +27,17 @@ router.post("/", async (req, res) => {
   res.json({ id: rez.id, role: rez.role, login: rez.login });
 });
 
+router.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/login");
+});
+
 // router.put("/", (_, res) => {
 //   res("tech cookies");
 // });
 
-// router.delete("/", (_, res) => {
-//   res("tech cookies");
-// });
+router.delete("/", (_, res) => {
+  res("tech cookies");
+});
 
 export default router;

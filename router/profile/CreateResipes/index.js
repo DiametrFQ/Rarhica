@@ -3,8 +3,10 @@ import query from "../../../DB.js";
 const router = new Router();
 
 router.get("/", async (req, res) => {
-  const user_id = req._parsedOriginalUrl.path.split("/")[2];
-  console.log(user_id);
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  const { id: user_id, login } = req.session.user;
   const { method, id } = req.query;
   let recipe = {};
 
@@ -26,7 +28,7 @@ router.get("/", async (req, res) => {
         ingredients,
       });
     });
-  else res.render("createRecipe", { user_id, method, recipe });
+  else res.render("createRecipe", { user_id, method, recipe, login });
 });
 
 router.post("/", (req, res) => {
@@ -51,6 +53,8 @@ router.post("/", (req, res) => {
       });
     })
     .then(() => console.log("success"));
+
+  res.status(201).end();
 });
 router.put("/:recipe_id", (req, res) => {
   const recipe_id = req.params.recipe_id;

@@ -11,7 +11,7 @@ import profile from "./profile/index.js";
 const router = new Router();
 
 router.use("/home", home);
-router.use("/login", login);
+router.use("/", login);
 router.use("/registration", reg);
 router.use("/feedback", feedback);
 router.use("/administration", admin);
@@ -19,4 +19,3 @@ router.use("/recipe", recipe);
 router.use("/profile", profile);
 
 export default router;
-export { router };
