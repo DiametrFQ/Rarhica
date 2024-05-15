@@ -20,7 +20,12 @@ router.post("/login", async (req, res) => {
   const rez = await query(
     "SELECT * FROM `user` WHERE login = ? AND password = ?",
     [login, password]
-  ).then((rez) => rez[0]);
+  )
+    .then((rez) => rez[0])
+    .catch((err) => {
+      res.status(403);
+      res.end();
+    });
 
   req.session.user = { id: rez.id, role: rez.role, login: rez.login };
 

@@ -28,8 +28,25 @@ router.use("/:id_user/createRecipe", createResipes);
 //   res("tech cookies");
 // });
 
-// router.delete("/", (_, res) => {
-//   res("tech cookies");
-// });
+router.delete("/:id", (req, res) => {
+  let { id } = req.params;
+  console.log(req.params);
+  console.log(req.session.user);
+  if (!id) {
+    id = req.session.user.id;
+  }
+  if (!id) {
+    res.status(403);
+    res.end();
+  }
+  console.log(req.params);
+  console.log(req.session.user);
+
+  console.log(id);
+  query("DELETE FROM `user` WHERE id = ?", [id]);
+
+  res.status(200);
+  res.end("ok");
+});
 
 export default router;

@@ -10,19 +10,13 @@ router.post("/", async (req, res) => {
   query(
     "INSERT INTO `user` (`id`, `login`, `email`, `password`, `role`) VALUES (NULL, ?, ?, ?, 'user')",
     [login, email, password]
-  );
-
-  res.status(201).end();
+  )
+    .then(() => {
+      res.status(201).end();
+    })
+    .catch(() => {
+      res.status(403).end();
+    });
 });
-//   res.render("profile", { id });
-// });
-
-// router.put("/", (_, res) => {
-//   res("tech cookies");
-// });
-
-// router.delete("/", (_, res) => {
-//   res("tech cookies");
-// });
 
 export default router;

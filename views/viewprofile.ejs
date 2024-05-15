@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('components/head') %>
+  <body>
+    <%- include('components/header', { login }) %>
+
+    <button class="createRecipe">Create recipe</button>
+
+    <div>
+      <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
+      <div>
+        <div><%=recipe.id%></div>
+        <div><%=recipe.name%></div>
+        <div><%=recipe.img%></div>
+        <button data-choise="view" data-id="<%=recipe.id%>">Осмотреть</button>
+        <button data-choise="approved" data-id="<%=recipe.id%>">
+          Одобрить
+        </button>
+        <button data-choise="rejected" data-id="<%=recipe.id%>">
+          Отклонить
+        </button>
+        <button data-choise="DELETE" data-id="<%=recipe.id%>">Удалить</button>
+      </div>
+      <%})}else {%>
+      <div>Пусто</div>
+      <%}%>
+    </div>
+    <!-- <div class="profile">
+
+      <button>+</button>
+    </div> -->
+
+    <%- include('components/footer') %>
+
+    <!-- <script>
+      const id = "<%= id_user %>";
+      console.log(`${id}/createRecipe?method=POST`);
+      $("button.createRecipe").on("click", () => {
+        window.location.href = `${id}/createRecipe?method=POST`;
+      });
+
+      $("button[data-method]").on("click", (e) => {
+        const recipe_id = $(e.currentTarget).data("id");
+        const method = $(e.currentTarget).data("method");
+        window.location.href =
+          `${id}/createRecipe` + `?method=${method}` + `&id=${recipe_id}`;
+      });
+    </script> -->
+  </body>
+</html>

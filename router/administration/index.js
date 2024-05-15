@@ -1,7 +1,10 @@
 import { Router } from "express";
 import query from "../../DB.js";
+import profile from "./profile/index.js";
 
 const router = new Router();
+
+router.use("/profile", profile);
 
 router.get("/", async (req, res) => {
   if (!req.session.user) return res.redirect("/login");
