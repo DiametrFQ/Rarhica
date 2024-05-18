@@ -2,9 +2,8 @@
 <html lang="en">
   <%- include('components/head') %>
   <body>
-    <%- include('components/header', { login }) %>
-
-    <button class="createRecipe">Create recipe</button>
+    <%- include('components/popup') %> <%- include('components/header', { role,
+    login }) %>
 
     <div>
       <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
@@ -32,19 +31,12 @@
 
     <%- include('components/footer') %>
 
-    <!-- <script>
+    <script>
       const id = "<%= id_user %>";
-      console.log(`${id}/createRecipe?method=POST`);
-      $("button.createRecipe").on("click", () => {
-        window.location.href = `${id}/createRecipe?method=POST`;
-      });
 
-      $("button[data-method]").on("click", (e) => {
-        const recipe_id = $(e.currentTarget).data("id");
-        const method = $(e.currentTarget).data("method");
-        window.location.href =
-          `${id}/createRecipe` + `?method=${method}` + `&id=${recipe_id}`;
+      $("button[data-choise='view']").on("click", (e) => {
+        window.location.href = `./${id}/recipes/${e.target.dataset.id}`;
       });
-    </script> -->
+    </script>
   </body>
 </html>

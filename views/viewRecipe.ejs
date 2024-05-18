@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('components/head') %>
+
+  <style>
+    input[name="id"] {
+      visibility: hidden;
+      height: 0;
+      width: 0;
+    }
+  </style>
+  <body>
+    <%- include('components/popup') %> <%- include('components/header', { role,
+    login }) %> <%= user_id %>
+    <div>
+      <form class="recipe">
+        <input
+          type="text"
+          name="name"
+          placeholder="Title"
+          value="<%= recipe?.name || '' %>" />
+        <input
+          type="text"
+          name="img"
+          placeholder="URL Image"
+          value="<%= recipe?.img || '' %>" />
+        <input
+          type="text"
+          name="about"
+          placeholder="about"
+          value="<%= recipe?.about || '' %>" />
+      </form>
+
+      <form class="ingredients">
+        <% ingredients.length && ingredients.forEach((ingredient) => { %>
+        <div>
+          <input
+            type="text"
+            name="ingredient"
+            placeholder="Ingredient"
+            value="<%= ingredient.name || '' %>" />
+          <input
+            type="text"
+            name="quantity"
+            placeholder="Quantity"
+            value="<%= ingredient.quantity || '' %>" />
+          <input
+            visibility="hidden"
+            name="id"
+            placeholder="id"
+            value="<%= ingredient.id || '' %>" />
+        </div>
+        <% }) %>
+      </form>
+
+      <button data-choise="approved" data-id="<%=recipe.id%>">Одобрить</button>
+      <button data-choise="rejected" data-id="<%=recipe.id%>">Отклонить</button>
+      <button data-choise="DELETE" data-id="<%=recipe.id%>">Удалить</button>
+    </div>
+    <%- include('components/footer') %>
+    <script>
+      const user_id = "<%= user_id %>";
+      $("button[data-choise='approved'], button[data-choise='rejected']").on(
+        "click",
+        (e) => {
+          e.preventDefault();
+          const id = $(e.target).data("id");
+          const choise = $(e.target).data("choise");
+          $.ajax({
+            url: "/administration/profile/" + user_id + "/recipes/" + id,
+            type: "PUT",
+            data: { choise },
+            error: (err) => {
+              showPopup(err.responseText);
+            },
+          });
+        }
+      );
+
+      $("button[data-choise='DELETE']").on("click", (e) => {
+        e.preventDefault();
+        const id = $(e.target).data("id");
+
+        $.ajax({
+          url: "/administration/profile/" + user_id + "/recipes/" + id,
+          type: "DELETE",
+          success: () =>
+            (window.location.href = "/administration/profile/" + user_id),
+          error: (err) => {
+            showPopup(err.responseText);
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,32 +1,12 @@
+@import url(./components/main.css);
 @import url(./administration.css);
 @import url(./error.css);
 @import url(./feedback.css);
 @import url(./home.css);
 @import url(./login.css);
 @import url(./recipe.css);
-@import url(./components/main.css);
 
-/* @mixin --button(--color: #174D7C) {
-    background-color: var(--color);
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-  
-    &:hover {
-      background-color: --darken(var(--color), 5%);
-    }
-  
-    &:active {
-      background-color: --darken(var(--color), 10%);
-    }
-  }
-  .primary-btn {
-    @apply --button
-  }
-   */
+
 :root{
     --global-margin: 0 13%;
 }
@@ -49,12 +29,11 @@ body{
         padding: var(--global-margin);
     } */
 
-    & > *:not(.header):not(.footer){
+    & > *:not(.header):not(.footer):not(.popup){
         align-self: center;
         margin: var(--global-margin);
     }
     & > .header, .footer{
         padding: var(--global-margin);
-        color: var(--zaebis)
     }
 }

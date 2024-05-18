@@ -7,15 +7,18 @@ router.get("/:id_user", async (req, res) => {
   if (!req.session.user) {
     return res.redirect("/login");
   }
-  const { id: id_user } = req.session.user;
-  console.log("session", req.session.user);
+  const { id: id_user, role } = req.session.user;
 
-  console.log("id_user", id_user);
-  const recipes = await query("SELECT * FROM `recipe` WHERE user_id = ?", [
-    id_user,
-  ]);
+  if (role === "admin") return res.redirect("/administration");
 
-  res.render("profile", { id_user, recipes, login: "Logout" });
+  query("SELECT * FROM `recipe` WHERE user_id = ?", [id_user])
+    .catch((err) => {
+      console.log(err);
+      res.status(400).end();
+    })
+    .then((recipes) =>
+      res.render("profile", { id_user, recipes, login: "Logout", role })
+    );
 });
 
 router.use("/:id_user/createRecipe", createResipes);
@@ -30,8 +33,7 @@ router.use("/:id_user/createRecipe", createResipes);
 
 router.delete("/:id", (req, res) => {
   let { id } = req.params;
-  console.log(req.params);
-  console.log(req.session.user);
+
   if (!id) {
     id = req.session.user.id;
   }
@@ -39,10 +41,7 @@ router.delete("/:id", (req, res) => {
     res.status(403);
     res.end();
   }
-  console.log(req.params);
-  console.log(req.session.user);
 
-  console.log(id);
   query("DELETE FROM `user` WHERE id = ?", [id]);
 
   res.status(200);

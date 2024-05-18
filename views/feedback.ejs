@@ -2,18 +2,21 @@
 <html lang="en">
   <%- include('components/head') %>
   <body>
-    <%- include('components/header', { login }) %>
+    <%- include('components/popup') %> <%- include('components/header', {
+    role,login }) %>
 
     <div class="feedback">
       <h1>Feedback</h1>
 
-      <form>
-        <input type="text" placeholder="Имя" />
-        <input type="text" placeholder="Фамилия" />
+      <form class="feedbackForm">
+        <input type="text" placeholder="Имя" name="name" />
+        <input type="text" placeholder="Фамилия" name="surname" />
 
-        <input type="text" placeholder="Номер телефона" />
+        <input type="text" placeholder="Номер телефона" name="phone" />
 
-        <textarea placeholder="Раскажите о чем вы думаете"></textarea>
+        <textarea
+          placeholder="Раскажите о чем вы думаете"
+          name="comment"></textarea>
       </form>
 
       <input type="button" value="Отправить" />
@@ -22,5 +25,16 @@
     <%- include('components/footer') %>
   </body>
 
-  <script></script>
+  <script>
+    $("input[type='button']").on("click", () => {
+      $.ajax({
+        url: "/feedback",
+        type: "POST",
+        data: $(".feedbackForm").serialize(),
+        // success: () => {
+        //   window.location.href = "/";
+        // },
+      });
+    });
+  </script>
 </html>

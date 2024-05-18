@@ -2,13 +2,16 @@
 <html lang="en">
   <%- include('components/head') %>
   <body>
-    <%- include('components/header', { login }) %>
+    <%- include('components/popup') %> <%- include('components/header', { role,
+    login }) %>
 
     <button class="createRecipe">Create recipe</button>
 
+    <% let colors = { approved: "green", rejected: "red", wait: "yellow" } %>
+
     <div>
       <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
-      <div>
+      <div style="background-color: <%= colors[recipe.status] %>">
         <div><%=recipe.id%></div>
         <div><%=recipe.name%></div>
         <div><%=recipe.img%></div>

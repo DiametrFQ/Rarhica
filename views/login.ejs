@@ -2,7 +2,8 @@
 <html lang="en">
   <%- include('components/head') %>
   <body>
-    <%- include('components/header', { login }) %>
+    <%- include('components/popup') %> <%- include('components/header', { role,
+    login }) %>
     <div class="loginError">Не правильно введен логин или пароль</div>
     <div class="login">
       <h1>Login</h1>
@@ -40,13 +41,19 @@
 
     <script>
       $("input.loginButton").on("click", () => {
-        const id = $.ajax({
+        $.ajax({
           url: "/login",
           type: "POST",
           data: $("form.loginForm").serialize(),
           success: (id) => {
+            console.log(id);
             if (id?.id) window.location.href = "/profile/" + id.id;
-            else $(".loginError").show();
+            else {
+              $(".loginError").show();
+            }
+          },
+          error: (err) => {
+            showPopup(err.responseText);
           },
         });
       });
@@ -59,9 +66,9 @@
             $(".login").show();
             $(".registration").hide();
           },
-          // error: (err) => {
-          //   console.log(err);
-          // },
+          error: (err) => {
+            showPopup(err.responseText);
+          },
         });
       });
 

@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
   if (role !== "admin") res.status(403).redirect("/profile/" + id);
 
   const allUsers = await query("SELECT * FROM `user`");
-  res.render("administration", { login, allUsers });
+  res.render("administration", { login, allUsers, role });
 });
 
 router.post("/", (_, res) => {

@@ -1,5 +1,11 @@
-const $ = require("./jquery.js");
+import components from "./components/main.js";
 
-$(document).ready(() => {
-  console.log("hello world");
+console.log({
+  ...components,
+});
+
+$("document").ready(() => {
+  console.log({
+    ...components,
+  });
 });

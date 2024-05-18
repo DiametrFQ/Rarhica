@@ -10,7 +10,8 @@
     }
   </style>
   <body>
-    <%- include('components/header', { login }) %> <%= user_id %>
+    <%- include('components/popup') %> <%- include('components/header', { role,
+    login }) %> <%= user_id %>
     <div>
       <form class="recipe">
         <input
