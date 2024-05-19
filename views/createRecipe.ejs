@@ -11,26 +11,8 @@
   </style>
   <body>
     <%- include('components/popup') %> <%- include('components/header', { role,
-    login }) %> <%= user_id %>
+    login }) %>
     <div>
-      <form class="recipe">
-        <input
-          type="text"
-          name="name"
-          placeholder="Title"
-          value="<%= recipe?.name || '' %>" />
-        <input
-          type="text"
-          name="img"
-          placeholder="URL Image"
-          value="<%= recipe?.img || '' %>" />
-        <input
-          type="text"
-          name="about"
-          placeholder="about"
-          value="<%= recipe?.about || '' %>" />
-      </form>
-
       <form class="ingredients">
         <% ingredients.length && ingredients.forEach((ingredient) => { %>
         <div>
@@ -52,6 +34,29 @@
         </div>
         <% }) %>
       </form>
+
+      <br />
+
+      <form class="recipe">
+        <input
+          type="text"
+          name="name"
+          placeholder="Title"
+          value="<%= recipe?.name || '' %>" />
+
+        <img class="recipe__img" src="<%= recipe?.img || '' %>" />
+
+        <input
+          type="text"
+          name="img"
+          placeholder="URL Image"
+          value="<%= recipe?.img || '' %>" />
+
+        <textarea type="text" name="about" placeholder="about">
+<%= recipe?.about || '' %></textarea
+        >
+      </form>
+
       <button class="addIngredient">Добавить ингредиент</button>
       <button class="removeIngredient">Удалить ингредиент</button>
 
@@ -77,11 +82,8 @@
         $("form.ingredients").children().last().remove();
       });
 
-      console.log($("form.recipe"));
       $(".requestButton").on("click", () => {
         console.log($("form.recipe").serialize());
-
-        console.log($("form.ingredients").serialize());
         $.ajax({
           url: "/profile/<%= user_id %>/createRecipe/<%= recipe?.id || '' %>",
           type: "<%= method %>",
@@ -92,13 +94,17 @@
             "&user_id=<%= user_id %>",
 
           success: () => {
-            console.log("success");
             window.location.href = "/profile/<%= user_id %>";
           },
           error: (err) => {
-            console.log("err", err);
+            showPopup(err.status, err.responseText, "red");
           },
         });
+      });
+
+      $("input[name=img]").on("input", (e) => {
+        console.log(e.target.value);
+        $("img.recipe__img").attr("src", e.target.value);
       });
     </script>
   </body>

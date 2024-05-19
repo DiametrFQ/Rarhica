@@ -11,10 +11,12 @@
 
     <div>
       <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
-      <div style="background-color: <%= colors[recipe.status] %>">
-        <div><%=recipe.id%></div>
+      <div
+        class="recipe"
+        data-id="<%=recipe.id%>"
+        style="background-color: <%= colors[recipe.status] %>">
         <div><%=recipe.name%></div>
-        <div><%=recipe.img%></div>
+        <img src="<%=recipe.img%>" alt="recipe image" />
         <button data-method="PUT" data-id="<%=recipe.id%>">update</button>
         <button data-method="DELETE" data-id="<%=recipe.id%>">delete</button>
       </div>
@@ -36,11 +38,29 @@
         window.location.href = `${id}/createRecipe?method=POST`;
       });
 
-      $("button[data-method]").on("click", (e) => {
+      $("button[data-method=PUT]").on("click", (e) => {
         const recipe_id = $(e.currentTarget).data("id");
         const method = $(e.currentTarget).data("method");
         window.location.href =
           `${id}/createRecipe` + `?method=${method}` + `&id=${recipe_id}`;
+      });
+
+      $("button[data-method=DELETE]").on("click", (e) => {
+        $.ajax({
+          type: "DELETE",
+          url: `${id}/createRecipe/${$(e.currentTarget).data("id")}`,
+          data: {
+            id: $(e.currentTarget).data("id"),
+            method: $(e.currentTarget).data("method"),
+          },
+          success: (data, status) => {
+            $(e.currentTarget).parent().remove();
+            showPopup(status, data, "green");
+          },
+          error: (err) => {
+            showPopup(err.status, err.responseText, "red");
+          },
+        });
       });
     </script>
   </body>

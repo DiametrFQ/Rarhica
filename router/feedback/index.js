@@ -19,10 +19,9 @@ router.post("/", (req, res) => {
     "INSERT INTO `Feedback` (`id`, `name`, `surname`, `phone`, `comment`, `user_id`) VALUES (NULL, ?, ?, ?, ?, ?);",
     [name, surname, phone, comment, user_id]
   )
-    .then(() => res.status(201).end())
-    .catch((err) => {
-      console.log(err);
-      res.status(400).end();
+    .then(() => res.status(201).send("Feakback posted"))
+    .catch(() => {
+      res.status(400).send("Bad Request");
     });
 });
 

@@ -4,7 +4,7 @@ const router = new Router();
 
 router.get("/:id", async (req, res) => {
   if (!req.session.user) {
-    return res.redirect("/login");
+    return res.status(302).redirect("/login");
   }
 
   const { id: user_id, login, role } = req.session.user;
@@ -19,9 +19,8 @@ router.get("/:id", async (req, res) => {
       ),
       query("SELECT * FROM `Ingredient` WHERE recipe_id = ?", [recipe_id]),
     ])
-      .catch((err) => {
-        console.log(err);
-        res.status(400).end();
+      .catch(() => {
+        res.status(400).send("Bad request");
       })
       .then(([recipe, ingredients]) =>
         res.render("viewRecipe", {
@@ -46,14 +45,15 @@ router.put("/:recipe_id", (req, res) => {
     choise,
     recipe_id,
   ]).then(() => {
-    res.status(202).end();
+    res.status(202).send("Recipe " + choise);
   });
 });
+
 router.delete("/:recipe_id", (req, res) => {
   const recipe_id = req.params.recipe_id;
 
   query("DELETE `Recipe` WHERE `Recipe`.`id` = ?", [recipe_id]).then(() => {
-    res.status(202).end();
+    res.status(202).end("Recipe deleted");
   });
 });
 

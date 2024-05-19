@@ -43,6 +43,50 @@
       <%- include('components/topRecipes') %>
     </div>
 
+    <div class="recipes"></div>
+
+    <script>
+      $(".header__search").on("input", () => {
+        if ($(".header__search").val().trim() === "") {
+          $(".recipes").hide();
+          $(".home").show();
+          console.log($(".header__search").val());
+        } else {
+          $.ajax({
+            url: "home/search",
+            type: "POST",
+            data: {
+              query: "%" + $(".header__search").val() + "%",
+            },
+            success: (data) => {
+              // console.log("recipes", data.recipes);
+              const htmlrecipe = data.recipes
+                .map(
+                  (recipe) =>
+                    `<div>
+                        <img src="${recipe.image}" alt="https://bpgroup.ee/i_ee/product_images/images/Z2000128438.jpg"/>
+                        <a href="/recipe/${recipe.id}">
+                          <h3>${recipe.name}</h3>
+                        </a>
+                    </div>`
+                )
+                .join("");
+
+              $(".recipes").html(htmlrecipe);
+
+              $(".home").hide();
+              $(".recipes").show();
+            },
+            error: (err) => {
+              showPopup(err.status, err.responseText, "red");
+              $(".recipes").hide();
+              $(".home").show();
+            },
+          });
+        }
+      });
+    </script>
+
     <%- include('components/footer') %>
   </body>
 </html>

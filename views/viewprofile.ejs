@@ -32,10 +32,39 @@
     <%- include('components/footer') %>
 
     <script>
-      const id = "<%= id_user %>";
+      const user_id = "<%= id_user %>";
+      $("button[data-choise='approved'], button[data-choise='rejected']").on(
+        "click",
+        (e) => {
+          e.preventDefault();
+          const id = $(e.target).data("id");
+          console.log(id);
+          const choise = $(e.target).data("choise");
+          $.ajax({
+            url: "/administration/profile/" + user_id + "/recipes/" + id,
+            type: "PUT",
+            data: { choise },
+            success: (data, status) => showPopup(status, data, "green"),
+            error: (err) => {
+              showPopup(err.status, err.responseText, "green");
+            },
+          });
+        }
+      );
 
-      $("button[data-choise='view']").on("click", (e) => {
-        window.location.href = `./${id}/recipes/${e.target.dataset.id}`;
+      $("button[data-choise='DELETE']").on("click", (e) => {
+        e.preventDefault();
+        const id = $(e.target).data("id");
+        console.log(id);
+        $.ajax({
+          url: "/administration/profile/" + user_id + "/recipes/" + id,
+          type: "DELETE",
+          success: () =>
+            (window.location.href = "/administration/profile/" + user_id),
+          error: (err) => {
+            showPopup(err.status, err.responseText, "red");
+          },
+        });
       });
     </script>
   </body>

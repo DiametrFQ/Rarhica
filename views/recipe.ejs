@@ -7,23 +7,24 @@
 
     <div class="recipe">
       <div class="recipe__head">
-        <div>Вишневый пирог</div>
-        <img
-          src="https://www.povarenok.ru/data/cache/2016sep/16/12/1709205_60985-710x550x.jpg"
-          alt="" />
+        <div><%= recipe.name %></div>
+        <img src="<%=
+        "https://bpgroup.ee/i_ee/product_images/images/Z2000128438.jpg" %>"
+        alt="<%= recipe.img %>" />
       </div>
 
-      <div class="recipe-about">Этот пирог очень вкусный!</div>
+      <div class="recipe-about"><%= recipe.about %></div>
+      <!-- login, role, recipe, ingredients -->
+      <div class="recipe-infoheader">Вам понадобится:</div>
+
+      <div class="recipe-info">
+        <% ingredients.forEach((ingredient) => { %>
+        <%-include('components/recipe/ingredient', {ingredient}) %> <% }) %>
+      </div>
 
       <div class="recipe-infoheader">Рецепт:</div>
 
-      <div class="recipe-info">
-        <%- include('components/recipe/ingredient') %> <%-
-        include('components/recipe/ingredient') %> <%-
-        include('components/recipe/ingredient') %> <%-
-        include('components/recipe/ingredient') %> <%-
-        include('components/recipe/ingredient') %>
-      </div>
+      <div class="recipe-about"><%= recipe.about %></div>
 
       <div class="comments">
         <%- include('components/recipe/comment') %> <%-

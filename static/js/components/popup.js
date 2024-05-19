@@ -1,5 +1,8 @@
-const showPopup = (responseText) => {
-  $(".popup").html(responseText);
+const showPopup = (status, responseText, color) => {
+  $(".popup__status").html(status);
+  $(".popup__message").html(responseText);
+  $(".popup").css("background-color", color);
+
   $(".popup").css("left", 0);
   setTimeout(() => {
     $(".popup").css("left", "-340px");

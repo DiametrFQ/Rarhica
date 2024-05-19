@@ -49,11 +49,12 @@
             console.log(id);
             if (id?.id) window.location.href = "/profile/" + id.id;
             else {
+              showPopup(400, "Incorrect user or password", "red");
               $(".loginError").show();
             }
           },
           error: (err) => {
-            showPopup(err.responseText);
+            showPopup(err.status, err.responseText, "red");
           },
         });
       });
@@ -67,7 +68,7 @@
             $(".registration").hide();
           },
           error: (err) => {
-            showPopup(err.responseText);
+            showPopup(err.status, err.responseText, "red");
           },
         });
       });

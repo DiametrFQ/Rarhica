@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
     ]).then(([recipe, ingredients]) => {
       console.log("recipe", recipe);
       console.log("ingredient", ingredients);
-      res.render("createRecipe", {
+      return res.render("createRecipe", {
         user_id,
         method,
         recipe,
@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
       });
     });
   else
-    res.render("createRecipe", {
+    return res.render("createRecipe", {
       user_id,
       method,
       recipe,
@@ -41,20 +41,18 @@ router.get("/", async (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { name, img, about, user_id, ingredient, quantity } = req.body;
 
-  if (!name || !img || !about || !user_id)
-    return res.status(400).json({ error: "Fill all fields" });
+  if (!name || !img || !about || !user_id) return res.sta;
 
-  console.log(name, img, about, user_id, ingredient, quantity);
   query(
     "INSERT INTO `Recipe` (`id`, `name`, `img`, `about`, `status`, `user_id`) VALUES (NULL, ?, ?, ?, ?, ?)",
     [name, img, about, "wait", user_id]
   )
     .catch((err) => {
       console.log(err);
-      res.status(400).end();
+      res.status(400).send("Bad Request");
     })
     .then((recipe) => recipe.insertId)
     .then((recipe_id) => {
@@ -75,13 +73,24 @@ router.post("/", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(400).end();
+      res.status(400).send("Bad Request");
     })
-    .then(() => res.status(201).end());
+    .then(() => res.status(201).send("Recipe created"));
 });
 router.put("/:recipe_id", (req, res) => {
   const recipe_id = req.params.recipe_id;
   const { name, img, about, ingredient, quantity, id } = req.body;
+
+  console.log("about.length", about.length);
+  if (name.length > 254) {
+    return res.status(400).send("Too long name");
+  }
+  if (img.length > 254) {
+    return res.status(400).send("Too long url img");
+  }
+  if (about.length > 4094) {
+    return res.status(400).send("Too long about data");
+  }
 
   query("DELETE FROM `ingredient` WHERE `ingredient`.`recipe_id` = ?", [
     recipe_id,
@@ -106,7 +115,7 @@ router.put("/:recipe_id", (req, res) => {
     [name, img, about, recipe_id]
   );
 
-  res.status(200).end();
+  res.status(200).send("Recipe updated");
 });
 router.delete("/:recipe_id", (req, res) => {
   const recipe_id = req.params.recipe_id;
@@ -115,7 +124,7 @@ router.delete("/:recipe_id", (req, res) => {
   query("DELETE FROM `ingredient` WHERE `ingredient`.`recipe_id` = ?", [
     recipe_id,
   ]);
-  res.status(200).end();
+  res.status(200).send("Recipe deleted");
 });
 
 export default router;

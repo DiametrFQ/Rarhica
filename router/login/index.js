@@ -4,9 +4,8 @@ import query from "../../DB.js";
 const router = new Router();
 
 router.get("/login", async (req, res) => {
-  if (!req.session.user) {
+  if (!req.session.user)
     return res.render("login", { error: " ", login: "Login", role: "anon" });
-  }
 
   const { id, login } = req.session.user;
 
@@ -22,12 +21,12 @@ router.post("/login", async (req, res) => {
     (rez) => rez[0]
   );
 
-  if (!rez) return res.status(403).send("Incorrect user or password");
+  if (!rez) return res.status(400).send("Incorrect user or password");
 
   const isValid = await argon2.verify(rez.password, password);
 
-  if (!rez && isValid)
-    return res.status(403).send("Incorrect user or password");
+  if (!isValid) return res.status(400).send("Incorrect user or password");
+
   req.session.user = { id: rez.id, role: rez.role, login: rez.login };
 
   res.json({ id: rez.id, role: rez.role, login: rez.login });

@@ -11,14 +11,9 @@ router.get("/:id_user", async (req, res) => {
 
   if (role === "admin") return res.redirect("/administration");
 
-  query("SELECT * FROM `recipe` WHERE user_id = ?", [id_user])
-    .catch((err) => {
-      console.log(err);
-      res.status(400).end();
-    })
-    .then((recipes) =>
-      res.render("profile", { id_user, recipes, login: "Logout", role })
-    );
+  query("SELECT * FROM `recipe` WHERE user_id = ?", [id_user]).then((recipes) =>
+    res.render("profile", { id_user, recipes, login: "Logout", role })
+  );
 });
 
 router.use("/:id_user/createRecipe", createResipes);

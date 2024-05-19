@@ -47,3 +47,19 @@
         height: 250px;
     }
 }
+
+.recipes{
+    /* flex: 1;
+    height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    /* background-color: black; */
+
+    & > * {
+        margin: 30px;
+        padding: 30px;
+        background-color: black;
+        border-radius: 32px;
+    }
+}

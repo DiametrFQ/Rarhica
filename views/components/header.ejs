@@ -2,8 +2,9 @@
   <div class="header__links">
     <a class="header__logo" href="/">Rarhica</a>
     <a class="header__link" href="/feedback">Feedback</a>
+    <a class="header__link" href="/about">About</a>
     <%- role === "admin" ? '<a class="header__link" href="/administration">Administration</a>' : ""%>
     <a class="header__link" href="<%= login === "Logout" || role === "admin" ? "/logout" : "/login"%>"><%= login %></a>
   </div>
-  <input type="text" placeholder="Какой ваш любимы рецепт?" />
+  <input class="header__search" type="text" placeholder="Какой ваш любимы рецепт?" />
 </header>
