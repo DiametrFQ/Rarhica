@@ -44,7 +44,17 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   const { name, img, about, user_id, ingredient, quantity } = req.body;
 
-  if (!name || !img || !about || !user_id) return res.sta;
+  if (!name || !img || !about || !user_id) return res.status(400).send();
+
+  if (name.length > 254) {
+    return res.status(400).send("Too long name");
+  }
+  if (img.length > 254) {
+    return res.status(400).send("Too long url img");
+  }
+  if (about.length > 4094) {
+    return res.status(400).send("Too long about data");
+  }
 
   query(
     "INSERT INTO `Recipe` (`id`, `name`, `img`, `about`, `status`, `user_id`) VALUES (NULL, ?, ?, ?, ?, ?)",

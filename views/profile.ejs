@@ -5,24 +5,32 @@
     <%- include('components/popup') %> <%- include('components/header', { role,
     login }) %>
 
-    <button class="createRecipe">Create recipe</button>
+    <div class="profile">
+      <button class="createRecipe">Create recipe</button>
 
-    <% let colors = { approved: "green", rejected: "red", wait: "yellow" } %>
+      <% let colors = { approved: "green", rejected: "red", wait: "yellow" } %>
 
-    <div>
-      <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
-      <div
-        class="recipe"
-        data-id="<%=recipe.id%>"
-        style="background-color: <%= colors[recipe.status] %>">
-        <div><%=recipe.name%></div>
-        <img src="<%=recipe.img%>" alt="recipe image" />
-        <button data-method="PUT" data-id="<%=recipe.id%>">update</button>
-        <button data-method="DELETE" data-id="<%=recipe.id%>">delete</button>
+      <div class="recipes">
+        <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
+        <div
+          class="recipe"
+          data-id="<%=recipe.id%>"
+          style="background-color: <%= colors[recipe.status] %>">
+          <img src="<%=recipe.img%>" alt="recipe image" />
+          <div class="recipe__info">
+            <div class="recipe__info__name"><%=recipe.name%></div>
+            <button data-method="PUT" data-id="<%=recipe.id%>">update</button>
+            <button data-method="DELETE" data-id="<%=recipe.id%>">
+              delete
+            </button>
+          </div>
+        </div>
+        <%})}else {%>
+        <div style="color: white">
+          Похоже у вас нет еще рецептов... Cамое время поделиться!!
+        </div>
+        <%}%>
       </div>
-      <%})}else {%>
-      <div>Похоже у вас нет еще рецептов... Cамое время поделиться!!</div>
-      <%}%>
     </div>
     <!-- <div class="profile">
 

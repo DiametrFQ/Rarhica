@@ -81,6 +81,21 @@
           });
         }
       );
+
+      $("button[data-choise='DELETE']").on("click", (e) => {
+        e.preventDefault();
+        const id = $(e.target).data("id");
+        console.log(id);
+        $.ajax({
+          url: "/administration/profile/" + user_id + "/recipes/" + id,
+          type: "DELETE",
+          success: () =>
+            (window.location.href = "/administration/profile/" + user_id),
+          error: (err) => {
+            showPopup(err.status, err.responseText, "red");
+          },
+        });
+      });
     </script>
   </body>
 </html>

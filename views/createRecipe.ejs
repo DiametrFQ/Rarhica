@@ -12,65 +12,75 @@
   <body>
     <%- include('components/popup') %> <%- include('components/header', { role,
     login }) %>
-    <div>
-      <form class="ingredients">
-        <% ingredients.length && ingredients.forEach((ingredient) => { %>
-        <div>
-          <input
-            type="text"
-            name="ingredient"
-            placeholder="Ingredient"
-            value="<%= ingredient.name || '' %>" />
-          <input
-            type="text"
-            name="quantity"
-            placeholder="Quantity"
-            value="<%= ingredient.quantity || '' %>" />
-          <input
-            visibility="hidden"
-            name="id"
-            placeholder="id"
-            value="<%= ingredient.id || '' %>" />
+    <div class="createRecipe">
+      <div class="createRecipe__recipe-view">
+        <img
+          class="createRecipe__recipe-recipe__img"
+          src="<%= recipe?.img || '' %>" />
+
+        <div class="createRecipe__ingredients">
+          <form class="createRecipe__ingredients-form">
+            <% ingredients.length && ingredients.forEach((ingredient) => { %>
+            <div class="createRecipe__ingredients-item">
+              <input
+                type="text"
+                name="ingredient"
+                placeholder="Ingredient"
+                value="<%= ingredient.name || '' %>" />
+              <input
+                visibility="hidden"
+                name="id"
+                placeholder="id"
+                value="<%= ingredient.id || '' %>" />
+              <input
+                type="text"
+                name="quantity"
+                placeholder="Quantity"
+                value="<%= ingredient.quantity || '' %>" />
+            </div>
+            <% }) %>
+          </form>
+
+          <div class="buttons">
+            <button class="addIngredient">Добавить ингредиент</button>
+            <button class="removeIngredient">Удалить ингредиент</button>
+          </div>
         </div>
-        <% }) %>
-      </form>
+      </div>
 
-      <br />
+      <div class="createRecipe__recipe-settings">
+        <form class="createRecipe__recipe-form">
+          <div class="createRecipe__recipe-inputs">
+            <input
+              type="text"
+              name="name"
+              placeholder="Title"
+              value="<%= recipe?.name || '' %>" />
 
-      <form class="recipe">
-        <input
-          type="text"
-          name="name"
-          placeholder="Title"
-          value="<%= recipe?.name || '' %>" />
+            <input
+              type="text"
+              name="img"
+              placeholder="URL Image"
+              value="<%= recipe?.img || '' %>" />
 
-        <img class="recipe__img" src="<%= recipe?.img || '' %>" />
-
-        <input
-          type="text"
-          name="img"
-          placeholder="URL Image"
-          value="<%= recipe?.img || '' %>" />
-
-        <textarea type="text" name="about" placeholder="about">
+            <textarea type="text" name="about" placeholder="about">
 <%= recipe?.about || '' %></textarea
-        >
-      </form>
+            >
+          </div>
+        </form>
 
-      <button class="addIngredient">Добавить ингредиент</button>
-      <button class="removeIngredient">Удалить ингредиент</button>
-
-      <button class="requestButton">
-        <% if(method === "PUT"){ %> Изменить <% } else if(method ===
-        "DELETE"){%> Удалить <% }else{ %> Добавить <% }%>
-      </button>
+        <button class="requestButton">
+          <% if(method === "PUT"){ %> Изменить <% } else if(method ===
+          "DELETE"){%> Удалить <% }else{ %> Добавить <% }%>
+        </button>
+      </div>
     </div>
     <%- include('components/footer') %>
     <script>
       $(".addIngredient").on("click", () => {
-        $("form.ingredients").append(
+        $("form.createRecipe__ingredients-form").append(
           `
-            <div>
+            <div class="createRecipe__ingredients-item">
                 <input type="text" name="ingredient" placeholder="Ingredient" />
                 <input type="text" name="quantity" placeholder="Quantity" />
             </div>
@@ -79,7 +89,7 @@
       });
 
       $(".removeIngredient").on("click", () => {
-        $("form.ingredients").children().last().remove();
+        $("form.createRecipe__ingredients-form").children().last().remove();
       });
 
       $(".requestButton").on("click", () => {
@@ -88,9 +98,9 @@
           url: "/profile/<%= user_id %>/createRecipe/<%= recipe?.id || '' %>",
           type: "<%= method %>",
           data:
-            $("form.recipe").serialize() +
+            $(".createRecipe__recipe-form").serialize() +
             "&" +
-            $("form.ingredients").serialize() +
+            $(".createRecipe__ingredients-form").serialize() +
             "&user_id=<%= user_id %>",
 
           success: () => {
@@ -104,7 +114,7 @@
 
       $("input[name=img]").on("input", (e) => {
         console.log(e.target.value);
-        $("img.recipe__img").attr("src", e.target.value);
+        $(".createRecipe__recipe-recipe__img").attr("src", e.target.value);
       });
     </script>
   </body>
