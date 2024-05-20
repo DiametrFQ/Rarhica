@@ -1,7 +1,11 @@
 "use strict";
 import { Router } from "express";
 import query from "../../DB.js";
+import rating from "./rating/index.js";
+
 const router = new Router();
+
+router.use("/:id/rating", rating);
 
 router.get("/:id", async (req, res) => {
   const { id: resipe_id } = req.params;
@@ -14,14 +18,21 @@ router.get("/:id", async (req, res) => {
     query("SELECT * FROM `Ingredient` WHERE recipe_id = ?", [resipe_id]).then(
       (ingredient) => ingredient
     ),
-  ]).then(([recipe, ingredients]) => {
-    console.log("recipe", recipe);
-    console.log("ingredient", ingredients);
+    query("SELECT grade FROM `Grade` WHERE recipe_id = ?", [resipe_id]).then(
+      (grade) => {
+        if (grade.length === 0) return 0;
 
+        const arg =
+          +grade.reduce((acc, curr) => acc + curr.grade, 0) / grade.length;
+
+        return arg.toFixed(2);
+      }
+    ),
+  ]).then(([recipe, ingredients, grade]) => {
     if (!req.session.user) {
       let login = "Login";
       let role = "anon";
-      return res.render("recipe", { login, role, recipe, ingredients });
+      return res.render("recipe", { login, role, recipe, ingredients, grade });
     } else {
       const { login, role } = req.session.user;
       return res.render("recipe", {
@@ -29,21 +40,10 @@ router.get("/:id", async (req, res) => {
         role,
         recipe,
         ingredients,
+        grade,
       });
     }
   });
 });
-
-// router.post("/recipe", (_, res) => {
-//     res.send("tech cookies");
-// });
-
-// router.put("/", (_, res) => {
-//   res("tech cookies");
-// });
-
-// router.delete("/", (_, res) => {
-//   res("tech cookies");
-// });
 
 export default router;

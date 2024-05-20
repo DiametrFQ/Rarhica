@@ -1,0 +1,52 @@
+.viewprofile{
+    width: 74%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > .viewprofile__recipe{
+        width:  100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        border: 1px solid black;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 10px;
+
+        & > .viewprofile__recipe-info{
+            --width-info: 170px;
+            width: var(--width-info);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+
+            & > div{
+                display: flex;
+                align-items: center;
+                margin: 5px;
+            }
+
+            
+            & > img{
+                height: calc(var(--width-info) * 0.8);
+                width: var(--width-info);
+            }
+        }
+
+        & > .viewprofile__recipe-info__buttons{
+            display: flex;
+            flex-direction: column;
+
+            & > button{
+                margin: 5px;
+                padding: 5px;
+                border: 1px solid black;
+                border-radius: 5px;
+            }
+        }
+    }
+}

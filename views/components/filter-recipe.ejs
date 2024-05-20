@@ -1,0 +1,27 @@
+<form class="filter-recipe">
+  <input type="text" name="search" placeholder="Поиск рецепта" />
+  <input type="number" name="min-rate" placeholder="Min по рейтингу" />
+  <input type="number" name="max-rate" placeholder="Max рейтингу" />
+
+  <input type="number" name="min-ingredients" placeholder="Min ингредиентов" />
+  <input type="number" name="max-ingredients" placeholder="Max ингредиентов" />
+
+  <input type="number" name="max-ingredients" placeholder="Max ингредиентов" />
+  <input type="number" name="max-ingredients" placeholder="Max ингредиентов" />
+
+  <button type="submit">Поиск</button>
+</form>
+
+<style>
+  .filter-recipe {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+
+    & > * {
+      margin: 3px 0;
+      padding-left: 10px;
+      border-radius: 4px;
+    }
+  }
+</style>

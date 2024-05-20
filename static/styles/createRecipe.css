@@ -1,38 +1,3 @@
-/* <div class="createRecipe">
-<img
-  class="createRecipe__recipe-recipe__img"
-  src="<%= recipe?.img || '' %>" />
-<div class="createRecipe__recipe-settings">
-  <div class="createRecipe__ingredients">
-    <form class="createRecipe__ingredients-form">
-      <% ingredients.length && ingredients.forEach((ingredient) => { %>
-      <div class="createRecipe__ingredients-item">
-        <input
-
-      </div>
-      <% }) %>
-    </form>
-
-    <div class="buttons">
-      <button class="addIngredient">Добавить ингредиент</button>
-      <button class="removeIngredient">Удалить ингредиент</button>
-    </div>
-  </div>
-
-  <form class="createRecipe__recipe-form">
-    <div class="createRecipe__recipe-inputs">
-      <input
-
-
-      <textarea 
-    </div>
-  </form>
-
-  <button class="requestButton">
-  </button>
-</div>
-</div> */
-
 .createRecipe {
     height: auto;
     flex: 1;

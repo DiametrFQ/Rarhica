@@ -1,0 +1,15 @@
+.star-rating {
+    margin: 20px;
+    display: inline-block;
+    unicode-bidi: bidi-override;
+}
+
+.star {
+    /* font-size: 2em; */
+    color: lightgray;
+    cursor: pointer;
+}
+
+.star:hover, .star::selection {
+    color: gold;
+}

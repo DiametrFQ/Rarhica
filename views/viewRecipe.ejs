@@ -12,39 +12,52 @@
   <body>
     <%- include('components/popup') %> <%- include('components/header', { role,
     login }) %>
-    <div>
-      <form class="ingredients">
+
+
+<div class="createRecipe">
+  <div class="createRecipe__recipe-view">
+    <img
+      class="createRecipe__recipe-recipe__img"
+      src="<%= recipe?.img || '' %>" />
+
+    <div class="createRecipe__ingredients">
+      <form class="createRecipe__ingredients-form">
         <% ingredients.length && ingredients.forEach((ingredient) => { %>
-        <div>
+        <div class="createRecipe__ingredients-item">
           <input
             type="text"
             name="ingredient"
             placeholder="Ingredient"
             value="<%= ingredient.name || '' %>" />
           <input
-            type="text"
-            name="quantity"
-            placeholder="Quantity"
-            value="<%= ingredient.quantity || '' %>" />
-          <input
             visibility="hidden"
             name="id"
             placeholder="id"
             value="<%= ingredient.id || '' %>" />
+          <input
+            type="text"
+            name="quantity"
+            placeholder="Quantity"
+            value="<%= ingredient.quantity || '' %>" />
         </div>
         <% }) %>
       </form>
 
-      <br />
+      <div class="buttons">
+        <button class="addIngredient">Добавить ингредиент</button>
+        <button class="removeIngredient">Удалить ингредиент</button>
+      </div>
+    </div>
+  </div>
 
-      <form class="recipe">
+  <div class="createRecipe__recipe-settings">
+    <form class="createRecipe__recipe-form">
+      <div class="createRecipe__recipe-inputs">
         <input
           type="text"
           name="name"
           placeholder="Title"
           value="<%= recipe?.name || '' %>" />
-
-        <img class="recipe__img" src="<%= recipe?.img || '' %>" />
 
         <input
           type="text"
@@ -55,11 +68,16 @@
         <textarea type="text" name="about" placeholder="about">
 <%= recipe?.about || '' %></textarea
         >
-      </form>
+      </div>
+    </form>
 
+    <div class="requestButton">
       <button data-choise="approved" data-id="<%=recipe.id%>">Одобрить</button>
       <button data-choise="rejected" data-id="<%=recipe.id%>">Отклонить</button>
     </div>
+  </div>
+</div>
+
     <%- include('components/footer') %>
     <script>
       const user_id = "<%= user_id %>";
@@ -74,7 +92,10 @@
             url: "/administration/profile/" + user_id + "/recipes/" + id,
             type: "PUT",
             data: { choise },
-            success: (data, status) => showPopup(status, data, "green"),
+            success: (data, status) =>{
+             showPopup(status, data, "green")
+             $(e.target).parent().parent().remove()
+            },
             error: (err) => {
               showPopup(err.status, err.responseText, "green");
             },

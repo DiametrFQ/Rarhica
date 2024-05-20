@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
   res.render("home", { login, role });
 });
 
-router.post("/search", async (req, res) => {
+router.post("/search", (req, res) => {
   let login = "Login";
   let role = "anon";
 
@@ -27,10 +27,28 @@ router.post("/search", async (req, res) => {
     role = req.session.user.role;
   }
 
-  await query(
+  query(
     "SELECT * FROM `Recipe` WHERE (name LIKE ? OR about LIKE ?) AND status = 'approved'",
     [search, search]
   )
+    .then(
+      async (recipes) =>
+        await Promise.all(
+          recipes.map(async (recipe) => {
+            const avg = await query(
+              "SELECT grade FROM `Grade` WHERE recipe_id = ?",
+              [recipe.id]
+            )
+              .then((grades) => {
+                return grades.length !== 0
+                  ? grades.reduce((a, b) => a + b.grade, 0) / grades.length
+                  : 0;
+              })
+              .then((avg) => avg.toFixed(2) || 0);
+            return { ...recipe, avg };
+          })
+        )
+    )
     .then((recipes) => res.json({ recipes, login, role }))
     .catch(() => res.status(400).send("Bad Request"));
 });

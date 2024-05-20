@@ -1,17 +1,11 @@
 .popup{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: -340px;
     margin: 0;
     width: 300px;
     padding: 20px;
-    /* height: 100px; */
     background: red;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     z-index: 100;
     transition: 0.5s;
-
-
 }

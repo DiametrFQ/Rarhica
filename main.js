@@ -10,14 +10,8 @@ import sessionMiddleware from "./session.js";
 import router from "./router/router.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const PORT = process.env.PORT || 3001;
-
-const key = readFileSync(__dirname + "/self.dev.key");
-const cert = readFileSync(__dirname + "/self.dev.crt");
-const options = {
-  key: key,
-  cert: cert,
-};
+const PORTHTTP = process.env.PORTHTTP || 3001;
+const PORTHTTPS = process.env.PORTHTTPS || 3002;
 
 const app = express();
 
@@ -47,8 +41,27 @@ app.use((req, res) => {
   });
 });
 
-var server = https.createServer(options, app);
+try {
+  const key = readFileSync(__dirname + "/self.dev.key");
+  const cert = readFileSync(__dirname + "/self.dev.crt");
+  const options = { key, cert };
+  var server = https.createServer(options, app);
 
-server.listen(PORT, () => {
-  console.log("https://localhost:" + PORT);
-});
+  const appHTPP = express();
+
+  appHTPP.use((req, res) => {
+    res.redirect("https://localhost:" + PORTHTTPS + req.url);
+  });
+
+  appHTPP.listen(PORTHTTP, () => {
+    console.log("http://localhost:" + PORTHTTP);
+  });
+
+  server.listen(PORTHTTPS, () => {
+    console.log("https://localhost:" + PORTHTTPS);
+  });
+} catch {
+  app.listen(PORTHTTP, () => {
+    console.log("http://localhost:" + PORTHTTP);
+  });
+}

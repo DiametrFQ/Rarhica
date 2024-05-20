@@ -7,33 +7,68 @@
 
     <div class="recipe">
       <div class="recipe__head">
-        <div><%= recipe.name %></div>
-        <img src="<%=
-        "https://bpgroup.ee/i_ee/product_images/images/Z2000128438.jpg" %>"
-        alt="<%= recipe.img %>" />
+        <div class="recipe__head__info">
+          <div><%= recipe.name %></div>
+          <img src="<%= recipe.img %>" alt="recipe img" />
+        </div>
+
+        <div class="recipe__head__infoheader">
+          <div class="recipe__head__infoheader-header">Вам понадобится:</div>
+
+          <div class="recipe__head__infoheader-info">
+            <% ingredients.forEach((ingredient) => { %>
+            <%-include('components/recipe/ingredient', {ingredient}) %> <% }) %>
+          </div>
+        </div>
       </div>
 
-      <div class="recipe-about"><%= recipe.about %></div>
-      <!-- login, role, recipe, ingredients -->
-      <div class="recipe-infoheader">Вам понадобится:</div>
+      <div class="recipe__about">
+        <h2 class="recipe__about-infoheader">Рецепт:</h2>
+        <div class="recipe__about-about">
+          <!-- <%- recipe.about.split('\n').map((p) => 
+           `<div class="recipe__about-about-p"> ${p} </div>`)
+           .join('')%> -->
 
-      <div class="recipe-info">
-        <% ingredients.forEach((ingredient) => { %>
-        <%-include('components/recipe/ingredient', {ingredient}) %> <% }) %>
+          <%- recipe.about.replace(/\n/g, '<br />')%>
+        </div>
       </div>
 
-      <div class="recipe-infoheader">Рецепт:</div>
+      <%- include('components/recipe/star-rating') %>
 
-      <div class="recipe-about"><%= recipe.about %></div>
+      <div class="recipe__comments">
+        <div class="recipe__comments-comment">
+          <% if(login && role === 'user') {%>
+          <div class="recipe__comments-comment-name"><%= login %></div>
+          <% } %>
 
-      <div class="comments">
-        <%- include('components/recipe/comment') %> <%-
-        include('components/recipe/comment') %> <%-
-        include('components/recipe/comment') %> <%-
-        include('components/recipe/comment') %>
+          <input class="recipe__comments-comment-text" type="text" />
+          <button class="recipe__comments-comment-button">Отправить</button>
+        </div>
+
+        <div class="recipe__comments-comments">
+          <%- include('components/recipe/comment') %> <%-
+          include('components/recipe/comment') %> <%-
+          include('components/recipe/comment') %> <%-
+          include('components/recipe/comment') %>
+        </div>
       </div>
     </div>
 
     <%- include('components/footer') %>
   </body>
+
+  <script>
+    $(".recipe__comments-comment-button").on("click", function () {
+      const login = "<%= login %>";
+      if (login === "Login") {
+        showPopup(
+          401,
+          "Войдите в аккаунт или зарегистрируйтесь, чтобы оставлять комментарии",
+          "red"
+        );
+      }
+      let comment = $(".recipe__comments-comment-text").val();
+      console.log(comment);
+    });
+  </script>
 </html>

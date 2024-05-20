@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('components/head') %>
+  <body>
+    <%- include('components/header') %>
+
+    <div class="registration">
+      <h1>Registration</h1>
+
+      <form>
+        <input type="text" placeholder="Login">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <input type="password" placeholder="Repeat password">
+      </form>
+
+      <input type="button" value="Отправить">
+    </div>
+
+    <div>
+      У вас уже есть аккаунт? <a href="login">Добро пожаловать</a>
+    </div>
+
+    <%- include('components/footer') %>
+  </body>
+</html>

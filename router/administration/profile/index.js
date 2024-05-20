@@ -11,11 +11,27 @@ router.get("/:id", (req, res) => {
   const { login, role } = req.session.user;
   const { id: id_user } = req.params;
 
-  console.log("PROFILE");
-
-  query("SELECT * FROM `recipe` WHERE user_id = ?", [id_user]).then((recipes) =>
-    res.render("viewprofile", { id_user, recipes, login, role })
-  );
+  query("SELECT * FROM `recipe` WHERE user_id = ? AND status = 'wait'", [
+    id_user,
+  ])
+    .then((recipes) => {
+      return recipes.map(async (recipe) => {
+        return {
+          ...recipe,
+          avg: await query("SELECT grade FROM `grade` WHERE recipe_id = ?", [
+            recipe.id,
+          ]).then((grades) =>
+            grades.length !== 0
+              ? grades.reduce((a, b) => a + b.grade, 0) / grades.length
+              : 0
+          ),
+        };
+      });
+    })
+    .then((recipes) => {
+      console.log("recipes", recipes);
+      res.render("viewprofile", { id_user, recipes, login, role });
+    });
 });
 
 router.delete("/:id", (req, res) => {

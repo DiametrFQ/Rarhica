@@ -1,66 +1,92 @@
-.recipe{
+.recipe {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 76%;
+
+  & > .recipe__head {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     /* align-items: center; */
-    font-size: 32px;
-    font-weight: 900;
-    /* justify-content: space-evenly; */
-    padding-bottom: 50px;
-    align-self: none;
+    justify-content: space-between;
+    width: 100%;
 
-    & > .recipe__head{
-        margin: 0;
-        padding: 0;
-        & > img{
-            width: 80%;
-        }
-    };
+    & > .recipe__head__info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin: 20px;
 
-    & > .recipe-about{
+      & > div {
         font-size: 24px;
-        font-weight: 100;
-        padding-bottom: 5px;
+      }
+
+      & > img {
+        width: 100%;
+      }
     }
 
-    & > .recipe-infoheader{
-        font-size: 18px;
-        font-weight: 300;
-        padding-bottom: 5px;
-    }
+    & > .recipe__head__infoheader {
+      display: flex;
+      flex-direction: column;
+      /* justify-content: space-between; */
+      width: 100%;
+      margin: 20px;
 
-    & > .recipe-info{
-
-    }
-}
-
-
-.ingredient{
-    display: flex;
-    /* justify-content: space-between; */
-
-    & > .ingredient-name{
-
-    }
-
-    & > .ingredient-quantity{
-        
-    }
-}
-
-.comments{
-    display: flex;
-    flex-direction: column;
-
-    & > .comment{
+      & > .recipe__head__infoheader-header {
+        font-size: 24px;
+      }
+  
+      & > .recipe__head__infoheader-info {
         display: flex;
         flex-direction: column;
+        /* width: 100%; */
 
-        & > .comment__name{
+        & > .ingredient {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+            width: 100%;
+            font-size: 24px;
+        
 
+          font-size: 24px;
+          & > .ingredient-quantity {
+            margin-right: 40px;
+            font-size: 24px;
+          }
         }
-
-        & > .comment__text{
-
-        }
+      }
     }
+  }
+
+  & > .recipe__about {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 60%;
+    margin: 20px;
+
+    & > .recipe__about-infoheader {
+      font-size: 24px;
+    }
+
+    & > .recipe__about-about {
+      font-size: 24px;
+
+      & > .recipe__about-about-p {
+        font-size: 24px;
+        margin: 20px 0;
+      }
+    }
+  }
+
+  & > .recipe__comments {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 60%;
+    margin: 20px;
+  }
 }

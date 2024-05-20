@@ -1,48 +1,8 @@
-/* 
-    <div class="profile">
-      <button class="createRecipe">Create recipe</button>
-
-      <% let colors = { approved: "green", rejected: "red", wait: "yellow" } %>
-
-      <div class="recipes">
-        <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
-        <div
-          class="recipe"
-          data-id="<%=recipe.id%>"
-          style="background-color: <%= colors[recipe.status] %>">
-          <img src="<%=recipe.img%>" alt="recipe image" />
-          <div class="recipe__info">
-            <div><%=recipe.name%></div>
-            <button data-method="PUT" data-id="<%=recipe.id%>">update</button>
-            <button data-method="DELETE" data-id="<%=recipe.id%>">
-              delete
-            </button>
-          </div>
-        </div>
-        <%})}else {%>
-        <div style="color: white">
-          Похоже у вас нет еще рецептов... Cамое время поделиться!!
-        </div>
-        <%}%>
-      </div>
-    </div>
- */
-/* 
-
-.createRecipe{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 50px;
-  background-color: #f0f0f0;
-} */
-
 .profile{
   width: calc(100% - 26%);
 
 
-  & > .recipes{
+  & > .profile__recipes{
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -51,7 +11,7 @@
 
 
 
-    & > .recipe{
+    & > .profile__recipes-recipe{
       /* flex: 1; */
       height: 300px;
 
@@ -88,27 +48,3 @@
     }
   }
 }
-
-/* 
-<div class="profile">
-  <button class="createRecipe">Create recipe</button>
-
-  <% let colors = { approved: "green", rejected: "red", wait: "yellow" } %>
-
-  <div class="recipes">
-    <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
-    <div
-      class="recipe"
-      data-id="<%=recipe.id%>"
-      style="background-color: <%= colors[recipe.status] %>">
-      <div><%=recipe.name%></div>
-      <img src="<%=recipe.img%>" alt="recipe image" />
-      <button data-method="PUT" data-id="<%=recipe.id%>">update</button>
-      <button data-method="DELETE" data-id="<%=recipe.id%>">delete</button>
-    </div>
-    <%})}else {%>
-    <div>Похоже у вас нет еще рецептов... Cамое время поделиться!!</div>
-    <%}%>
-  </div>
-</div> 
-*/

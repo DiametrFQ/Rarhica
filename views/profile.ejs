@@ -10,15 +10,16 @@
 
       <% let colors = { approved: "green", rejected: "red", wait: "yellow" } %>
 
-      <div class="recipes">
+      <div class="profile__recipes">
         <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
         <div
-          class="recipe"
+          class="profile__recipes-recipe"
           data-id="<%=recipe.id%>"
           style="background-color: <%= colors[recipe.status] %>">
           <img src="<%=recipe.img%>" alt="recipe image" />
           <div class="recipe__info">
             <div class="recipe__info__name"><%=recipe.name%></div>
+            <div class="recipe__info__name"><%=recipe.avg%></div>
             <button data-method="PUT" data-id="<%=recipe.id%>">update</button>
             <button data-method="DELETE" data-id="<%=recipe.id%>">
               delete

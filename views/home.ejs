@@ -43,12 +43,15 @@
       <%- include('components/topRecipes') %>
     </div>
 
-    <div class="recipes"></div>
+    <div class="home__recipes__wrapper">
+      <%- include('components/filter-recipe') %>
+      <div class="home__recipes__wrapper-recipes"></div>
+    </div>
 
     <script>
       $(".header__search").on("input", () => {
         if ($(".header__search").val().trim() === "") {
-          $(".recipes").hide();
+          $(".home__recipes__wrapper-recipes").hide();
           $(".home").show();
           console.log($(".header__search").val());
         } else {
@@ -60,25 +63,25 @@
             },
             success: (data) => {
               const htmlrecipe = data.recipes
-                .map(
-                  (recipe) =>
-                    `<div>
+                .map((recipe) => {
+                  return `<div class="home__recipes__wrapper-recipes__recipe">
                         <img src="${recipe.img}" alt="https://bpgroup.ee/i_ee/product_images/images/Z2000128438.jpg"/>
+                        <div class="rating">${recipe.avg}</div>
                         <a href="/recipe/${recipe.id}">
                           <h3>${recipe.name}</h3>
                         </a>
-                    </div>`
-                )
+                    </div>`;
+                })
                 .join("");
 
-              $(".recipes").html(htmlrecipe);
+              $(".home__recipes__wrapper-recipes").html(htmlrecipe);
 
               $(".home").hide();
-              $(".recipes").show();
+              $(".home__recipes__wrapper-recipes").show();
             },
             error: (err) => {
               showPopup(err.status, err.responseText, "red");
-              $(".recipes").hide();
+              $(".home__recipes__wrapper-recipes").hide();
               $(".home").show();
             },
           });

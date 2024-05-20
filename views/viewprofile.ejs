@@ -5,20 +5,24 @@
     <%- include('components/popup') %> <%- include('components/header', { role,
     login }) %>
 
-    <div>
+    <div class="viewprofile">
       <% if(recipes.length) { recipes.forEach((recipe,i) => {%>
-      <div>
-        <div><%=recipe.id%></div>
-        <div><%=recipe.name%></div>
-        <div><%=recipe.img%></div>
-        <button data-choise="view" data-id="<%=recipe.id%>">Осмотреть</button>
-        <button data-choise="approved" data-id="<%=recipe.id%>">
-          Одобрить
-        </button>
-        <button data-choise="rejected" data-id="<%=recipe.id%>">
-          Отклонить
-        </button>
-        <button data-choise="DELETE" data-id="<%=recipe.id%>">Удалить</button>
+      <div class="viewprofile__recipe">
+        <div class="viewprofile__recipe-info">
+          <div><%=recipe.name%></div>
+          <img src="<%=recipe.img%>" alt="recipe img">
+        </div>
+        <div class="viewprofile__recipe-info__buttons">
+          <button data-choise="view" data-id="<%=recipe.id%>">Осмотреть</button>
+          <button data-choise="approved" data-id="<%=recipe.id%>">
+            Одобрить
+          </button>
+          <button data-choise="rejected" data-id="<%=recipe.id%>">
+            Отклонить
+          </button>
+          <button data-choise="DELETE" data-id="<%=recipe.id%>">Удалить</button>
+        </div>
+
       </div>
       <%})}else {%>
       <div>Пусто</div>
@@ -65,6 +69,10 @@
             showPopup(err.status, err.responseText, "red");
           },
         });
+      });
+
+      $("button[data-choise='view']").on("click", (e) => {
+        window.location.href = `./${user_id}/recipes/${e.target.dataset.id}`;
       });
     </script>
   </body>
