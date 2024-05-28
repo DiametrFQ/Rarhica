@@ -16,30 +16,44 @@ router.get("/:id_user", async (req, res) => {
       async (recipes) =>
         await Promise.all(
           recipes.map(async (recipe) => {
-            const avg = await query(
-              "SELECT grade FROM `Grade` WHERE recipe_id = ?",
-              [recipe.id]
-            )
-              .then((grades) => {
-                return grades.length !== 0
-                  ? grades.reduce((a, b) => a + b.grade, 0) / grades.length
-                  : 0;
+            const [comment, avg] = await Promise.all([
+              query("SELECT * FROM `reject_request` WHERE recipe_id = ?", [
+                recipe.id,
+              ]),
+              query("SELECT grade FROM `Grade` WHERE recipe_id = ?", [
+                recipe.id,
+              ]),
+            ])
+              .catch(([comments, grades]) => {
+                return [comments, grades.grade];
               })
-              .then((avg) => avg.toFixed(2) || 0);
-            return { ...recipe, avg };
+              .then(([comments, grades]) => {
+                grades =
+                  grades.length !== 0
+                    ? grades.reduce((a, b) => a + b.grade, 0) / grades.length
+                    : 0;
+                console.log("grades", grades);
+                return [comments, grades];
+              })
+              .then(([comments, avg]) => [
+                comments[0] || "",
+                avg.toFixed(2) || 0,
+              ]);
+            console.log("avg", avg);
+            console.log("comment", comment);
+            return { ...recipe, avg, comment };
           })
         )
     )
     .then(async (recipes) => {
-      console.log("recipes", recipes);
       res.render("profile", {
         id_user,
         recipes: recipes,
         login: "Logout",
         role,
       });
-    })
-    .catch(() => res.status(400).send("Bad Request"));
+    });
+  // .catch(() => res.status(400).send("Bad Request"));
 });
 
 router.use("/:id_user/createRecipe", createResipes);

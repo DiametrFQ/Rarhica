@@ -28,9 +28,10 @@ router.get("/:id", (req, res) => {
         };
       });
     })
+    .then((recipes) => Promise.all(recipes))
     .then((recipes) => {
-      console.log("recipes", recipes);
-      res.render("viewprofile", { id_user, recipes, login, role });
+      const recipess = recipes;
+      res.render("viewprofile", { id_user, recipes: recipess, login, role });
     });
 });
 

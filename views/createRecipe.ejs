@@ -116,6 +116,22 @@
         console.log(e.target.value);
         $(".createRecipe__recipe-recipe__img").attr("src", e.target.value);
       });
+
+      console.log(Array.from($("input").val).every((input) => input.value));
+      if (Array.from(...$("input")).every((input) => input.value)) {
+        $(".requestButton").css("visibility", "visible");
+      } else {
+        $(".requestButton").css("visibility", "hidden");
+      }
+
+      $("input").on("input", () => {
+        console.log(Array.from(...$("input")).every((input) => input.value));
+        if (Array.from(...$("input")).every((input) => input.value)) {
+          $(".requestButton").css("visibility", "visible");
+        } else {
+          $(".requestButton").css("visibility", "hidden");
+        }
+      });
     </script>
   </body>
 </html>

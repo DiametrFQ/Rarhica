@@ -10,7 +10,7 @@
       <div class="viewprofile__recipe">
         <div class="viewprofile__recipe-info">
           <div><%=recipe.name%></div>
-          <img src="<%=recipe.img%>" alt="recipe img">
+          <img src="<%=recipe.img%>" alt="recipe img" />
         </div>
         <div class="viewprofile__recipe-info__buttons">
           <button data-choise="view" data-id="<%=recipe.id%>">Осмотреть</button>
@@ -22,7 +22,6 @@
           </button>
           <button data-choise="DELETE" data-id="<%=recipe.id%>">Удалить</button>
         </div>
-
       </div>
       <%})}else {%>
       <div>Пусто</div>
@@ -39,20 +38,32 @@
       const user_id = "<%= id_user %>";
       $("button[data-choise='approved'], button[data-choise='rejected']").on(
         "click",
-        (e) => {
-          e.preventDefault();
-          const id = $(e.target).data("id");
-          console.log(id);
-          const choise = $(e.target).data("choise");
-          $.ajax({
-            url: "/administration/profile/" + user_id + "/recipes/" + id,
-            type: "PUT",
-            data: { choise },
-            success: (data, status) => showPopup(status, data, "green"),
-            error: (err) => {
-              showPopup(err.status, err.responseText, "green");
-            },
-          });
+        function (e) {
+          const inputLength = $(this).parent().parent().find("input").length;
+          if ($(this).data("choise") === "rejected" && inputLength === 0) {
+            const newInput = $(
+              '<input type="text" class="viewprofile__recipe-info__input">'
+            );
+            // Вставляем его после первого элемента
+            $(this).parent().before(newInput);
+          } else {
+            const text =
+              $(this)?.parent()?.parent()?.find("input")?.val() || "";
+
+            e.preventDefault();
+            const id = $(e.target).data("id");
+            const choise = $(e.target).data("choise");
+
+            $.ajax({
+              url: "/administration/profile/" + user_id + "/recipes/" + id,
+              type: "PUT",
+              data: { choise, text },
+              success: (data, status) => showPopup(status, data, "green"),
+              error: (err) => {
+                showPopup(err.status, err.responseText, "green");
+              },
+            });
+          }
         }
       );
 

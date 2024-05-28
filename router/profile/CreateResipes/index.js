@@ -124,6 +124,7 @@ router.put("/:recipe_id", (req, res) => {
     "UPDATE `Recipe` SET `name` = ?, `img` = ?, `about` = ?, `status` = 'wait' WHERE `Recipe`.`id` = ?",
     [name, img, about, recipe_id]
   );
+  query("DELETE FROM `reject_request` WHERE `recipe_id` = ?", [recipe_id]);
 
   res.status(200).send("Recipe updated");
 });

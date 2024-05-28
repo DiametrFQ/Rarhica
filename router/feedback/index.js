@@ -15,11 +15,13 @@ router.post("/", (req, res) => {
   const { id: user_id } = req.session.user;
   const { name, surname, phone, comment } = req.body;
   console.log(name, surname, phone, comment, user_id);
+
+  // if()
   query(
     "INSERT INTO `Feedback` (`id`, `name`, `surname`, `phone`, `comment`, `user_id`) VALUES (NULL, ?, ?, ?, ?, ?);",
     [name, surname, phone, comment, user_id]
   )
-    .then(() => res.status(201).send("Feakback posted"))
+    .then(() => res.status(201).send("Feadback posted"))
     .catch(() => {
       res.status(400).send("Bad Request");
     });

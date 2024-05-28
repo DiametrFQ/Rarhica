@@ -2,12 +2,13 @@
 @import url(./administration.css);
 @import url(./error.css);
 @import url(./feedback.css);
-@import url(./home.css);
 @import url(./login.css);
 @import url(./profile.css);
 @import url(./createRecipe.css);
 @import url(./recipe.css);
 @import url(./viewprofile.css);
+@import url(./home.css);
+@import url(./about.css);
 
 
 :root{

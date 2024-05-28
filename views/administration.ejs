@@ -4,17 +4,21 @@
   <body>
     <%- include('components/popup') %> <%- include('components/header', { role,
     login }) %>
-    <h1>administration</h1>
 
-    <% allUsers.filter(user => user.role !== "admin").forEach((user) => { %>
-    <div id="user-<%= user.id %>">
-      <div><%= user.id %></div>
-      <div><%= user.login %></div>
-      <button class="viewRecipes" data-id="<%= user.id %>">View recipes</button>
-      <button class="bun" data-id="<%= user.id %>">Bun</button>
+    <div class="administration">
+      <% allUsers.filter(user => user.role !== "admin").forEach((user) => { %>
+      <div class="administration__user" id="user-<%= user.id %>">
+        <div class="administration__user-login"><%= user.login %></div>
+        <div class="administration__user-buttons">
+          <button class="viewRecipes" data-id="<%= user.id %>">
+            View recipes
+          </button>
+          <button class="bun" data-id="<%= user.id %>">Bun</button>
+        </div>
+      </div>
+      <% }) %>
     </div>
-
-    <% }) %> <%- include('components/footer') %>
+    <%- include('components/footer') %>
   </body>
 
   <script>

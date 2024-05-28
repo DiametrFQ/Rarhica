@@ -38,12 +38,21 @@ router.get("/:id", async (req, res) => {
 });
 
 router.put("/:recipe_id", (req, res) => {
+  const admin_id = req.session.user.id;
   const { recipe_id } = req.params;
-  const { choise } = req.body;
+  const { choise, text } = req.body;
+  console.log("text", text);
 
-  query("UPDATE `Recipe` SET `status` = ? WHERE `Recipe`.`id` = ?", [
-    choise,
-    recipe_id,
+  Promise.all([
+    query("UPDATE `Recipe` SET `status` = ? WHERE `Recipe`.`id` = ?", [
+      choise,
+      recipe_id,
+    ]),
+
+    query(
+      "INSERT `reject_request` SET `date` = ?, `comment` = ?, `recipe_id` = ?, `admin_id` = ?",
+      [new Date(Date.now()).toLocaleDateString("ru"), text, recipe_id, admin_id]
+    ),
   ]).then(() => {
     res.status(202).send("Recipe " + choise);
   });

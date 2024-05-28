@@ -1,0 +1,52 @@
+.administration{
+    width: 76%;
+    height: auto;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  /* background-color: aqua; */
+
+  & > .administration__user{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+    margin: 20px 0;
+    border: 1px solid black;
+
+    transition: 0.5s;
+    &:hover{
+        padding: 20px;
+    }
+
+    &  .administration__user-id{
+      font-size: 24px;
+      margin: 30px;
+    }
+
+    & > .administration__user-login{
+      font-size: 48px;
+      font-weight: 900;
+      margin: 10px;
+
+      & > .viewRecipes{
+        margin: 10px;
+      }
+
+      
+    }
+
+    & > .administration__user-buttons{
+      margin: 25px;
+
+      /* & > *{
+        margin: 30px;
+        padding: 30px;
+      } */
+    }
+  }
+}

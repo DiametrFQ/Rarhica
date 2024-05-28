@@ -5,23 +5,29 @@
   & > .profile__recipes{
     width: 100%;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+    /* flex-wrap: wrap; */;
     justify-content: space-evenly;
 
-
-
     & > .profile__recipes-recipe{
-      /* flex: 1; */
-      height: 300px;
+      flex: 1;
+      margin: 20px;
+      border-radius: 32px;
 
       display: flex;
       flex-direction: row;
       align-items: center;
+      text-align: center;
+
+      & > *{
+        flex: 1;
+
+      }
 
       & > img{
-        width: 300px;
-        height: 300px;
+        width: 100px;
+        height: 100px;
+        border-radius: 32px;
       }
 
       & > .recipe__info{

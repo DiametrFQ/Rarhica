@@ -17,14 +17,19 @@
           data-id="<%=recipe.id%>"
           style="background-color: <%= colors[recipe.status] %>">
           <img src="<%=recipe.img%>" alt="recipe image" />
-          <div class="recipe__info">
-            <div class="recipe__info__name"><%=recipe.name%></div>
-            <div class="recipe__info__name"><%=recipe.avg%></div>
+          <!-- <div class="recipe__info"> -->
+          <div class="recipe__info__name"><%=recipe.name%></div>
+          <div class="recipe__info__name"><%=recipe.avg%></div>
+          <div class="buttons">
             <button data-method="PUT" data-id="<%=recipe.id%>">update</button>
             <button data-method="DELETE" data-id="<%=recipe.id%>">
               delete
             </button>
           </div>
+          <!-- </div> -->
+        </div>
+        <div class="profile__recipes-comment">
+          <%= recipe.comment.date %> <%= recipe.comment.comment %>
         </div>
         <%})}else {%>
         <div style="color: white">

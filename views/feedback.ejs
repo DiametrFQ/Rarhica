@@ -30,9 +30,9 @@
         url: "/feedback",
         type: "POST",
         data: $(".feedbackForm").serialize(),
-        // success: () => {
-        //   window.location.href = "/";
-        // },
+        success: (data, status) => {
+          showPopup(status, data, "green");
+        },
         error: (err) => {
           showPopup(err.status, err.responseText, "red");
         },

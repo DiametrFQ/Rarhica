@@ -36,22 +36,24 @@
         <%- include('components/home/review__item-left', {text, url}) %> <% text
         = `Присоединяйтесь к "Кулинарным приключениям" и окунитесь в мир вкуса,
         творчества и вдохновения!` %> <% url =
-        "https://elle.ua/imgold/690x459_0xd42ee42d_2169421211447697866.jpeg" %>
-        <%- include('components/home/review__item-right', {text, url}) %>
+        "https://avatars.dzeninfra.ru/get-zen_doc/3985748/pub_604cd8030a7d51654a261081_604ceaad0a7d51654a495f15/scale_1200"
+        %> <%- include('components/home/review__item-right', {text, url}) %>
       </div>
 
-      <%- include('components/topRecipes') %>
+      <!-- <%- include('components/topRecipes') %> -->
     </div>
 
     <div class="home__recipes__wrapper">
-      <%- include('components/filter-recipe') %>
+      <!-- <%- include('components/filter-recipe') %> -->
       <div class="home__recipes__wrapper-recipes"></div>
     </div>
 
     <script>
+      $(".home__recipes__wrapper").hide();
       $(".header__search").on("input", () => {
+        console.log($(".header__search").val());
         if ($(".header__search").val().trim() === "") {
-          $(".home__recipes__wrapper-recipes").hide();
+          $(".home__recipes__wrapper").hide();
           $(".home").show();
           console.log($(".header__search").val());
         } else {
@@ -64,24 +66,34 @@
             success: (data) => {
               const htmlrecipe = data.recipes
                 .map((recipe) => {
-                  return `<div class="home__recipes__wrapper-recipes__recipe">
-                        <img src="${recipe.img}" alt="https://bpgroup.ee/i_ee/product_images/images/Z2000128438.jpg"/>
-                        <div class="rating">${recipe.avg}</div>
-                        <a href="/recipe/${recipe.id}">
-                          <h3>${recipe.name}</h3>
-                        </a>
-                    </div>`;
+                  return `
+                      <span class="home__recipes__wrapper-recipes__recipe">
+                          <a href="/recipe/${recipe.id}">
+                            <h3>${recipe.name}</h3>
+                          </a>
+                          <img src="${
+                            recipe.img
+                          }" alt="https://bpgroup.ee/i_ee/product_images/images/Z2000128438.jpg"/>
+                          <div>
+                            <span class="rating">${recipe.avg}</span>
+                            <span class="rating__star">${Array.from(
+                              { length: recipe.avg },
+                              () => "&#9733;"
+                            ).join("")}</span>
+                          </div>
+                      </span>
+                    `;
                 })
                 .join("");
 
               $(".home__recipes__wrapper-recipes").html(htmlrecipe);
 
               $(".home").hide();
-              $(".home__recipes__wrapper-recipes").show();
+              $(".home__recipes__wrapper").show();
             },
             error: (err) => {
               showPopup(err.status, err.responseText, "red");
-              $(".home__recipes__wrapper-recipes").hide();
+              $(".home__recipes__wrapper").hide();
               $(".home").show();
             },
           });

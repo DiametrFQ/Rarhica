@@ -1,0 +1,10 @@
+.about{
+  & > * {
+    margin: 20px;
+    font-size: large;
+  }
+
+  & > a{
+    font-size: 48px;
+  }
+}
