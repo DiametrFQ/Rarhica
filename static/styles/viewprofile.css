@@ -37,6 +37,16 @@
             }
         }
 
+        & > .viewprofile__recipe-info__input{
+            width: 50%;
+            height: 30px;
+            margin: 5px;
+            padding: 5px;
+            font-size: large;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+
         & > .viewprofile__recipe-info__buttons{
             display: flex;
             flex-direction: column;

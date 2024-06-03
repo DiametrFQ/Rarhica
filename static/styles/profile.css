@@ -52,5 +52,11 @@
         }
       }
     }
+    & > .profile__recipes-comment{
+      background-color: red;
+      margin: 0 20px;
+      padding: 10px;
+      border-radius: 8px;
+    }
   }
 }

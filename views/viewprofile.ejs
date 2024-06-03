@@ -58,7 +58,10 @@
               url: "/administration/profile/" + user_id + "/recipes/" + id,
               type: "PUT",
               data: { choise, text },
-              success: (data, status) => showPopup(status, data, "green"),
+              success: (data, status) => {
+                showPopup(status, data, "green");
+                $(this)?.parent()?.parent().remove();
+              },
               error: (err) => {
                 showPopup(err.status, err.responseText, "green");
               },

@@ -44,7 +44,7 @@
     </div>
 
     <div class="home__recipes__wrapper">
-      <!-- <%- include('components/filter-recipe') %> -->
+      <%- include('components/filter-recipe') %>
       <div class="home__recipes__wrapper-recipes"></div>
     </div>
 
@@ -64,7 +64,11 @@
               query: "%" + $(".header__search").val() + "%",
             },
             success: (data) => {
+              const min = $('input[name="min-rate"]').val();
+              const max = $('input[name="max-rate"]').val();
               const htmlrecipe = data.recipes
+                .filter((recipe) => (min ? recipe.avg >= min : true))
+                .filter((recipe) => (max ? recipe.avg <= max : true))
                 .map((recipe) => {
                   return `
                       <span class="home__recipes__wrapper-recipes__recipe">

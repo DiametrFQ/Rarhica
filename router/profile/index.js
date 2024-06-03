@@ -58,14 +58,6 @@ router.get("/:id_user", async (req, res) => {
 
 router.use("/:id_user/createRecipe", createResipes);
 
-// router.post("/recipe", (_, res) => {
-//     res.send("tech cookies");
-// });
-
-// router.put("/", (_, res) => {
-//   res("tech cookies");
-// });
-
 router.delete("/:id", (req, res) => {
   let { id } = req.params;
 

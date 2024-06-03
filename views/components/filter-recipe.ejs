@@ -1,15 +1,8 @@
 <form class="filter-recipe">
-  <input type="text" name="search" placeholder="Поиск рецепта" />
   <input type="number" name="min-rate" placeholder="Min по рейтингу" />
   <input type="number" name="max-rate" placeholder="Max рейтингу" />
 
-  <input type="number" name="min-ingredients" placeholder="Min ингредиентов" />
-  <input type="number" name="max-ingredients" placeholder="Max ингредиентов" />
-
-  <input type="number" name="max-ingredients" placeholder="Max ингредиентов" />
-  <input type="number" name="max-ingredients" placeholder="Max ингредиентов" />
-
-  <button type="submit">Поиск</button>
+  <!-- <button class="filter_button" type="button">Поиск</button> -->
 </form>
 
 <style>
@@ -25,3 +18,51 @@
     }
   }
 </style>
+
+<script>
+  $(".filter_button").click(function (e) {
+    e.preventDefault();
+    const min = $('input[name="min-rate"]').val();
+    const max = $('input[name="max-rate"]').val();
+    const search = $(".header__search").val();
+    console.log(min, max, search);
+
+    $.ajax({
+      url: "home/search",
+      type: "POST",
+      data: {
+        query: "%" + search + "%",
+        min,
+        max,
+      },
+      success: (data) => {
+        const htmlrecipe = data.recipes
+          .map((recipe) => {
+            return `
+                <span class="home__recipes__wrapper-recipes__recipe">
+                    <a href="/recipe/${recipe.id}">
+                      <h3>${recipe.name}</h3>
+                    </a>
+                    <img src="${
+                      recipe.img
+                    }" alt="https://bpgroup.ee/i_ee/product_images/images/Z2000128438.jpg"/>
+                    <div>
+                      <span class="rating">${recipe.avg}</span>
+                      <span class="rating__star">${Array.from(
+                        { length: recipe.avg },
+                        () => "&#9733;"
+                      ).join("")}</span>
+                    </div>
+                </span>
+              `;
+          })
+          .join("");
+
+        $(".home__recipes__wrapper-recipes").html(htmlrecipe);
+
+        $(".home").hide();
+        $(".home__recipes__wrapper").show();
+      },
+    });
+  });
+</script>

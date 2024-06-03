@@ -20,17 +20,19 @@ router.post("/search", (req, res) => {
   let login = "Login";
   let role = "anon";
 
-  const { query: search } = req.body;
+  const { query: search, min, max } = req.body;
 
   if (req.session.user) {
     login = req.session.user.login;
     role = req.session.user.role;
   }
 
-  query(
-    "SELECT * FROM `Recipe` WHERE (name LIKE ? OR about LIKE ?) AND status = 'approved'",
-    [search, search]
-  )
+  console.log(req.body);
+
+  let SQLquery =
+    "SELECT * FROM `Recipe` WHERE (name LIKE ? OR about LIKE ?) AND status = 'approved'";
+
+  query(SQLquery, [search, search])
     .then(
       async (recipes) =>
         await Promise.all(
